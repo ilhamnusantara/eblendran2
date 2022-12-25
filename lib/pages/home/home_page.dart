@@ -3,6 +3,7 @@ import 'package:eblendrang2/models/instansi_model.dart';
 import 'package:eblendrang2/models/models.dart';
 import 'package:eblendrang2/models/user_model.dart';
 import 'package:eblendrang2/pages/page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:eblendrang2/pages/widgets/instansi_title.dart';
 import 'package:eblendrang2/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 width: 54,
                 height: 54,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     image: AssetImage('assets/icon_email.png'),
@@ -121,6 +122,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget item() {
+      List<String> aa = getPrefs() as List<String>;
       return Container(
         margin: EdgeInsets.only(
           top: 8,
@@ -130,9 +132,13 @@ class _HomePageState extends State<HomePage> {
         child:
             BlocBuilder<InstansiBloc, InstansiState>(builder: (context, state) {
           if (state is InstansiLoadingState) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else if (state is InstansiLoadedState) {
-            List<Instansi> instansi = state.instansiList;
+            List<Instansi> instansi = (aa[0] == '0')
+                ? state.instansiList
+                    .where((element) => element.idInstansi == aa[1])
+                    .toList()
+                : state.instansiList;
             if (instansi.isNotEmpty) {
               return ListView.builder(
                 shrinkWrap: true,
@@ -228,4 +234,15 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+}
+
+Future<List<String>> getPrefs() async {
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+
+  String? status = pref.getString('status');
+  String? id_instansi = pref.getString('idInstansi');
+  List<String> a = [];
+  a[0] = status!;
+  a[1] = id_instansi!;
+  return a;
 }

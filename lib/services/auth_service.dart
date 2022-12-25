@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:eblendrang2/models/models.dart';
 import 'package:eblendrang2/models/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -59,8 +59,12 @@ class AuthService {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['data'];
+
+      final SharedPreferences pref = await SharedPreferences.getInstance();
       // UserModel user = UserModel.fromJson(data['user']);
       User user = User.fromJson(data);
+      pref.setString('status', user.user.status);
+      pref.setString('idInstansi', user.user.idInstansi.toString());
       return user;
     } else {
       throw Exception('Gagal Login');

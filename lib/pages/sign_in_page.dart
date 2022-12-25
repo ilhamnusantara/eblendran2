@@ -13,7 +13,6 @@ class SigninPage extends StatefulWidget {
 class _SigninPageState extends State<SigninPage> {
   TextEditingController usernameController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
-
   bool isLoading = false;
 
   @override

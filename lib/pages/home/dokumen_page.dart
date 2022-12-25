@@ -119,7 +119,7 @@ class _DokumenPageState extends State<DokumenPage> {
               child: Container(
                 width: 54,
                 height: 54,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     image: AssetImage('assets/icon_email.png'),
@@ -418,6 +418,113 @@ class _DokumenPageState extends State<DokumenPage> {
 
     //       );
     // }
+    Widget item1() {
+      return Container(
+          margin: EdgeInsets.only(
+            top: 10,
+            left: marginLogin,
+            right: marginLogin,
+          ),
+          child:
+              BlocBuilder<DokumenBloc, DokumenState>(builder: (context, state) {
+            if (state is DokumenLoadingState) {
+              return const CircularProgressIndicator();
+            } else if (state is DokumenLoadedState) {
+              List<Dokumen> dokumen = state.dokumenList.toList();
+              if (dokumen.isNotEmpty) {
+                return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: dokumen.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      int i = 0;
+                      debugPrint("i ke => ${i.toString()}");
+                      i++;
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/detailDokumen',
+                              arguments: jsonEncode(dokumen[index]));
+                        },
+                        child: Card(
+                          elevation: 12,
+                          color: backgroundColor13,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Container(
+                                width: 40,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  image: const DecorationImage(
+                                    image: AssetImage(
+                                      'assets/icon_goverment.png',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${dokumen[index].keteranganBelanja}',
+                                      style: primaryTextStyle.copyWith(
+                                        fontWeight: semiBold,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${dokumen[index].namaInstansi}',
+                                      style: subtitleTextStyle.copyWith(
+                                        fontWeight: light,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 23,
+                                height: 23,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/icon_information.png'),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+              } else {
+                return Center(
+                  child: Text(
+                    "No Data",
+                    style: subtitleTextStyle.copyWith(
+                      fontWeight: light,
+                    ),
+                  ),
+                );
+              }
+            } else {
+              return const Center(
+                child: Text("ERROR"),
+              );
+            }
+          }));
+    }
 
     Widget item2() {
       return Container(
@@ -445,8 +552,8 @@ class _DokumenPageState extends State<DokumenPage> {
                       i++;
                       return GestureDetector(
                         onTap: () {
-                          // Navigator.of(context).pushNamed('/detailDokumen',
-                          //     arguments: jsonEncode(allDokumens[index]));
+                          Navigator.of(context).pushNamed('/detailDokumen',
+                              arguments: jsonEncode(dokumen[index]));
                         },
                         child: Card(
                           elevation: 12,
@@ -456,7 +563,7 @@ class _DokumenPageState extends State<DokumenPage> {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               Container(
@@ -464,14 +571,14 @@ class _DokumenPageState extends State<DokumenPage> {
                                 height: 80,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     image: AssetImage(
                                       'assets/icon_goverment.png',
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 12,
                               ),
                               Expanded(
@@ -485,7 +592,7 @@ class _DokumenPageState extends State<DokumenPage> {
                                       ),
                                     ),
                                     Text(
-                                      '${dokumen[index].idInstansi}',
+                                      '${dokumen[index].namaInstansi}',
                                       style: subtitleTextStyle.copyWith(
                                         fontWeight: light,
                                       ),
@@ -556,10 +663,10 @@ class _DokumenPageState extends State<DokumenPage> {
                       i++;
                       return GestureDetector(
                         onTap: () {
-                          // Navigator.of(context).pushNamed('/detailDokumen',
-                          //     arguments: jsonEncode(allDokumens[index]));
+                          Navigator.of(context).pushNamed('/detailDokumen',
+                              arguments: jsonEncode(dokumen[index]));
                         },
-                        child: new Card(
+                        child: Card(
                           elevation: 12,
                           color: backgroundColor13,
                           shape: RoundedRectangleBorder(
@@ -567,7 +674,7 @@ class _DokumenPageState extends State<DokumenPage> {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               Container(
@@ -575,14 +682,14 @@ class _DokumenPageState extends State<DokumenPage> {
                                 height: 80,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     image: AssetImage(
                                       'assets/icon_goverment.png',
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 12,
                               ),
                               Expanded(
@@ -596,7 +703,7 @@ class _DokumenPageState extends State<DokumenPage> {
                                       ),
                                     ),
                                     Text(
-                                      '${dokumen[index].idInstansi}',
+                                      '${dokumen[index].namaInstansi}',
                                       style: subtitleTextStyle.copyWith(
                                         fontWeight: light,
                                       ),
@@ -607,7 +714,7 @@ class _DokumenPageState extends State<DokumenPage> {
                               Container(
                                 width: 23,
                                 height: 23,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: AssetImage(
@@ -615,7 +722,7 @@ class _DokumenPageState extends State<DokumenPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                             ],
@@ -667,8 +774,8 @@ class _DokumenPageState extends State<DokumenPage> {
                       i++;
                       return GestureDetector(
                         onTap: () {
-                          // Navigator.of(context).pushNamed('/detailDokumen',
-                          //     arguments: jsonEncode(allDokumens[index]));
+                          Navigator.of(context).pushNamed('/detailDokumen',
+                              arguments: jsonEncode(dokumen[index]));
                         },
                         child: Card(
                           elevation: 12,
@@ -707,7 +814,7 @@ class _DokumenPageState extends State<DokumenPage> {
                                       ),
                                     ),
                                     Text(
-                                      '${dokumen[index].idInstansi}',
+                                      '${dokumen[index].namaInstansi}',
                                       style: subtitleTextStyle.copyWith(
                                         fontWeight: light,
                                       ),
@@ -767,30 +874,88 @@ class _DokumenPageState extends State<DokumenPage> {
         //       });
         //     }),
         (selectedIndex == 0)
-            ? item2()
+            ? item1()
             : (selectedIndex == 1)
-                ? item3()
-                : item4(),
+                ? item2()
+                : (selectedIndex == 2)
+                    ? item3()
+                    : item4(),
       ],
     );
   }
 }
 
+//http://www.barajacoding.or.id/radio-button-in-flutter/
+
 Future<AwesomeDialog> filtered(
   BuildContext context,
 ) async {
+  int fIndex = 0;
   return AwesomeDialog(
     context: context,
     animType: AnimType.scale,
     dialogType: DialogType.question,
-    body: const Center(
-      child: Text(
-        'If the body is specified, then title and description will be ignored, this allows to 											further customize the dialogue.',
-        style: TextStyle(fontStyle: FontStyle.italic),
-      ),
+    body: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Material(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: InkWell(
+            onTap: () {
+              fIndex = 1;
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              decoration: BoxDecoration(color: Colors.blueAccent[40]),
+              child: const Text(
+                "Belum Ada Foto",
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+          ),
+        ),
+        Material(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: InkWell(
+            onTap: () {
+              fIndex = 2;
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              decoration: BoxDecoration(color: Colors.blueAccent[40]),
+              child: const Text(
+                "Belum Ada BAST",
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+          ),
+        ),
+        Material(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: InkWell(
+            onTap: () {
+              fIndex = 3;
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              decoration: BoxDecoration(color: Colors.blueAccent[40]),
+              child: const Text(
+                "Belum Ada SPK",
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+          ),
+        ),
+      ],
     ),
-    title: 'This is Ignored',
-    desc: 'This is also Ignored',
+    title: 'Filter',
+    desc: 'Kategori :',
     btnOkOnPress: () {
       // titles.indexOf(e) == selectedIndex;
       // if (onTap != null) {
@@ -800,14 +965,14 @@ Future<AwesomeDialog> filtered(
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => MainPage(cIndex: 1, fIndex: 2)));
+              builder: (context) => MainPage(cIndex: 1, fIndex: fIndex)));
     },
-    btnCancelOnPress: () {
-      debugPrint("click cancel");
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MainPage(cIndex: 1, fIndex: 1)));
-    },
+    // btnCancelOnPress: () {
+    //   debugPrint("click cancel");
+    //   Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) => MainPage(cIndex: 1, fIndex: 1)));
+    // },
   )..show();
 }

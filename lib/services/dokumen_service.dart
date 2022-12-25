@@ -21,7 +21,7 @@ class DokumenService {
   //   }
   // }
   Future<List<Dokumen>> getDokumens() async {
-    var url = '$baseUrl/anydokumens';
+    var url = '$baseUrl/anyDokumens';
     var headers = {'Content-Type': 'application/json'};
     var response = await http.get(Uri.parse(url), headers: headers);
 

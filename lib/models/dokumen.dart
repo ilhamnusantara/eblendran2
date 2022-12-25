@@ -24,6 +24,7 @@ class Dokumen extends Equatable {
       required this.status,
       required this.statusBelanja,
       required this.tahun,
+      required this.namaInstansi,
       required this.createdAt,
       required this.updatedAt,
       this.docStatus});
@@ -48,6 +49,7 @@ class Dokumen extends Equatable {
   final String status;
   final String statusBelanja;
   final String tahun;
+  final String namaInstansi;
   final DateTime createdAt;
   final DateTime updatedAt;
   final List<DokumenStatus>? docStatus;
@@ -73,6 +75,7 @@ class Dokumen extends Equatable {
           required String status,
           required String statusBelanja,
           required String tahun,
+          required String namaInstansi,
           required DateTime createdAt,
           required DateTime updatedAt,
           required List<DokumenStatus> docStatus}) =>
@@ -97,6 +100,7 @@ class Dokumen extends Equatable {
           status: status ?? this.status,
           statusBelanja: statusBelanja ?? this.statusBelanja,
           tahun: tahun ?? this.tahun,
+          namaInstansi: namaInstansi ?? this.namaInstansi,
           createdAt: createdAt ?? this.createdAt,
           updatedAt: updatedAt ?? this.updatedAt,
           docStatus: docStatus ?? this.docStatus);
@@ -120,6 +124,9 @@ class Dokumen extends Equatable {
         tglBast: (json["tgl_bast"] == null)
             ? "Not Detect"
             : json['tgl_bast'].toString(),
+        namaInstansi: (json['nama_instansi'] == null)
+            ? 'Not Detect'
+            : json['nama_instansi'],
         fileBast:
             (json["file_bast"] == null) ? "Not Detect" : json['file_bast'],
         merk: (json["merk"] == null) ? "Not Detect" : json['merk'],
@@ -160,10 +167,12 @@ class Dokumen extends Equatable {
         "status": status,
         "status_belanja": statusBelanja,
         "tahun": tahun,
+        "nama_instansi": namaInstansi,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };
 
   @override
-  List<Object?> get props => [idDokumen, idJenis, idInstansi, noSpk, noBast];
+  List<Object?> get props =>
+      [idDokumen, idJenis, idInstansi, noSpk, noBast, namaInstansi];
 }
