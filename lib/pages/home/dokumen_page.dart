@@ -191,233 +191,6 @@ class _DokumenPageState extends State<DokumenPage> {
       );
     }
 
-    // Widget item() {
-    //   return Container(
-    //       margin: EdgeInsets.only(
-    //         top: 10,
-    //         left: marginLogin,
-    //         right: marginLogin,
-    //       ),
-    //       child: filteredDokumens.length == 0
-    //           ? ListView.builder(
-    //               shrinkWrap: true,
-    //               itemCount: allDokumens.length,
-    //               itemBuilder: (BuildContext context, int index) {
-    //                 return GestureDetector(
-    //                   onTap: () {
-    //                     Navigator.of(context).pushNamed('/detailDokumen',
-    //                         arguments: jsonEncode(allDokumens[index]));
-    //                   },
-    //                   child: new Card(
-    //                     elevation: 12,
-    //                     color: backgroundColor13,
-    //                     shape: RoundedRectangleBorder(
-    //                       borderRadius: BorderRadius.circular(12),
-    //                     ),
-    //                     child: Row(
-    //                       children: [
-    //                         SizedBox(
-    //                           width: 15,
-    //                         ),
-    //                         Container(
-    //                           width: 40,
-    //                           height: 80,
-    //                           decoration: BoxDecoration(
-    //                             borderRadius: BorderRadius.circular(5),
-    //                             image: DecorationImage(
-    //                               image: AssetImage(
-    //                                 'assets/icon_goverment.png',
-    //                               ),
-    //                             ),
-    //                           ),
-    //                         ),
-    //                         SizedBox(
-    //                           width: 12,
-    //                         ),
-    //                         Expanded(
-    //                           child: Column(
-    //                             crossAxisAlignment: CrossAxisAlignment.start,
-    //                             children: [
-    //                               Text(
-    //                                 '${allDokumens[index].keterangan_belanja}',
-    //                                 style: primaryTextStyle.copyWith(
-    //                                   fontWeight: semiBold,
-    //                                 ),
-    //                               ),
-    //                               Text(
-    //                                 '${allDokumens[index].instansi.nama_instansi}',
-    //                                 style: subtitleTextStyle.copyWith(
-    //                                   fontWeight: light,
-    //                                 ),
-    //                               ),
-    //                             ],
-    //                           ),
-    //                         ),
-    //                         Container(
-    //                           width: 23,
-    //                           height: 23,
-    //                           decoration: BoxDecoration(
-    //                             shape: BoxShape.circle,
-    //                             image: DecorationImage(
-    //                               image:
-    //                                   AssetImage('assets/icon_information.png'),
-    //                             ),
-    //                           ),
-    //                         ),
-    //                         SizedBox(
-    //                           width: 15,
-    //                         ),
-    //                       ],
-    //                     ),
-    //                   ),
-    //                 );
-    //               })
-    //           : ListView.builder(
-    //               shrinkWrap: true,
-    //               itemCount: filteredDokumens.length,
-    //               itemBuilder: (BuildContext context, int index) {
-    //                 return GestureDetector(
-    //                   onTap: () {
-    //                     Navigator.of(context).pushNamed('/detailDokumen',
-    //                         arguments: jsonEncode(filteredDokumens[index]));
-    //                   },
-    //                   child: new Card(
-    //                     elevation: 12,
-    //                     color: backgroundColor13,
-    //                     shape: RoundedRectangleBorder(
-    //                       borderRadius: BorderRadius.circular(12),
-    //                     ),
-    //                     child: Row(
-    //                       children: [
-    //                         SizedBox(
-    //                           width: 15,
-    //                         ),
-    //                         Container(
-    //                           width: 40,
-    //                           height: 80,
-    //                           decoration: BoxDecoration(
-    //                             borderRadius: BorderRadius.circular(5),
-    //                             image: DecorationImage(
-    //                               image: AssetImage(
-    //                                 'assets/icon_goverment.png',
-    //                               ),
-    //                             ),
-    //                           ),
-    //                         ),
-    //                         SizedBox(
-    //                           width: 12,
-    //                         ),
-    //                         Expanded(
-    //                           child: Column(
-    //                             crossAxisAlignment: CrossAxisAlignment.start,
-    //                             children: [
-    //                               Text(
-    //                                 '${filteredDokumens[index].keterangan_belanja}',
-    //                                 style: primaryTextStyle.copyWith(
-    //                                   fontWeight: semiBold,
-    //                                 ),
-    //                               ),
-    //                               Text(
-    //                                 '${filteredDokumens[index].instansi.nama_instansi}',
-    //                                 style: subtitleTextStyle.copyWith(
-    //                                   fontWeight: light,
-    //                                 ),
-    //                               ),
-    //                             ],
-    //                           ),
-    //                         ),
-    //                         Container(
-    //                           width: 23,
-    //                           height: 23,
-    //                           decoration: BoxDecoration(
-    //                             shape: BoxShape.circle,
-    //                             image: DecorationImage(
-    //                               image:
-    //                                   AssetImage('assets/icon_information.png'),
-    //                             ),
-    //                           ),
-    //                         ),
-    //                         SizedBox(
-    //                           width: 15,
-    //                         ),
-    //                       ],
-    //                     ),
-    //                   ),
-    //                 );
-    //               })
-    //       // child: ListView.builder(
-    //       //     shrinkWrap: true,
-    //       //     itemCount: filteredDokumens.length,
-    //       //     itemBuilder: (BuildContext context, index){
-    //       //       return GestureDetector(
-    //       //         onTap: () {
-    //       //           Navigator.of(context).pushNamed('/detailDokumen', arguments: jsonEncode(filteredDokumens[index]));
-    //       //         },
-    //       //         child: new Card(
-    //       //           elevation: 12,
-    //       //           color: backgroundColor13,
-    //       //           shape: RoundedRectangleBorder(
-    //       //             borderRadius: BorderRadius.circular(12),
-    //       //           ),
-    //       //           child: Row(
-    //       //             children: [
-    //       //               SizedBox(
-    //       //                 width: 15,
-    //       //               ),
-    //       //               Container(
-    //       //                 width: 40,
-    //       //                 height: 80,
-    //       //                 decoration: BoxDecoration(
-    //       //                   borderRadius: BorderRadius.circular(5),
-    //       //                   image: DecorationImage(
-    //       //                     image: AssetImage(
-    //       //                       'assets/icon_goverment.png',
-    //       //                     ),
-    //       //                   ),
-    //       //                 ),
-    //       //               ),
-    //       //               SizedBox(
-    //       //                 width: 12,
-    //       //               ),
-    //       //               Expanded(
-    //       //                 child: Column(
-    //       //                   crossAxisAlignment: CrossAxisAlignment.start,
-    //       //                   children: [
-    //       //                     Text(
-    //       //                       '${filteredDokumens[index].keterangan_belanja}',
-    //       //                       style: primaryTextStyle.copyWith(
-    //       //                         fontWeight: semiBold,
-    //       //                       ),
-    //       //                     ),
-    //       //                     Text(
-    //       //                       '${filteredDokumens[index].instansi.nama_instansi}',
-    //       //                       style: subtitleTextStyle.copyWith(
-    //       //                         fontWeight: light,
-    //       //                       ),
-    //       //                     ),
-    //       //                   ],
-    //       //                 ),
-    //       //               ),
-    //       //               Container (
-    //       //                 width: 23,
-    //       //                 height: 23,
-    //       //                 decoration: BoxDecoration(
-    //       //                   shape: BoxShape.circle,
-    //       //                   image: DecorationImage(image: AssetImage('assets/icon_information.png'),),
-    //       //                 ),
-    //       //               ),
-    //       //               SizedBox(
-    //       //                 width: 15,
-    //       //               ),
-    //       //             ],
-    //       //           ),
-    //       //         ),
-    //       //       );
-    //       //     }
-    //       // ),
-
-    //       );
-    // }
     Widget item1() {
       return Container(
           margin: EdgeInsets.only(
@@ -890,6 +663,7 @@ class _DokumenPageState extends State<DokumenPage> {
 Future<AwesomeDialog> filtered(
   BuildContext context,
 ) async {
+  int? _value = 0;
   int fIndex = 0;
   return AwesomeDialog(
     context: context,
@@ -898,81 +672,341 @@ Future<AwesomeDialog> filtered(
     body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: InkWell(
-            onTap: () {
-              fIndex = 1;
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-              decoration: BoxDecoration(color: Colors.blueAccent[40]),
-              child: const Text(
-                "Belum Ada Foto",
-                style: TextStyle(fontSize: 24),
-              ),
+        Container(
+            height: 60,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Color(0xff263238), width: 1),
             ),
-          ),
-        ),
-        Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: InkWell(
-            onTap: () {
-              fIndex = 2;
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-              decoration: BoxDecoration(color: Colors.blueAccent[40]),
-              child: const Text(
-                "Belum Ada BAST",
-                style: TextStyle(fontSize: 24),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Blm ada Foto",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black)),
+                  Radio(
+                    value: 1,
+                    activeColor: Colors.amber[30],
+                    groupValue: _value,
+                    onChanged: (value) {
+                      _value = value;
+                      // setState(() {
+                      //   _value = value as int?;
+                      // });
+                    },
+                  )
+                ],
               ),
+            )),
+        const SizedBox(height: 10),
+        Container(
+            height: 60,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Color(0xff263238), width: 1),
             ),
-          ),
-        ),
-        Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: InkWell(
-            onTap: () {
-              fIndex = 3;
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-              decoration: BoxDecoration(color: Colors.blueAccent[40]),
-              child: const Text(
-                "Belum Ada SPK",
-                style: TextStyle(fontSize: 24),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Blm ada SPK",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black)),
+                  Radio(
+                    value: 2,
+                    activeColor: Colors.amber[30],
+                    groupValue: _value,
+                    onChanged: (value) {
+                      _value = value;
+                      // setState(() {
+                      //   _value = value as int?;
+                      // });
+                    },
+                  )
+                ],
               ),
+            )),
+        const SizedBox(height: 10),
+        Container(
+            height: 60,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Color(0xff263238), width: 1),
             ),
-          ),
-        ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Blm ada BAST",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black)),
+                  Radio(
+                    value: 3,
+                    activeColor: Colors.amber[30],
+                    groupValue: _value,
+                    onChanged: (value) {
+                      _value = value;
+                      // setState(() {
+                      //   _value = value as int?;
+                      // });
+                    },
+                  )
+                ],
+              ),
+            )),
+        const SizedBox(height: 10),
       ],
     ),
     title: 'Filter',
     desc: 'Kategori :',
     btnOkOnPress: () {
-      // titles.indexOf(e) == selectedIndex;
-      // if (onTap != null) {
-      //   onTap(titles.indexOf(e));
-      // }
-      debugPrint("click OKE");
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => MainPage(cIndex: 1, fIndex: fIndex)));
     },
-    // btnCancelOnPress: () {
-    //   debugPrint("click cancel");
-    //   Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (context) => MainPage(cIndex: 1, fIndex: 1)));
-    // },
   )..show();
 }
+// Widget item() {
+    //   return Container(
+    //       margin: EdgeInsets.only(
+    //         top: 10,
+    //         left: marginLogin,
+    //         right: marginLogin,
+    //       ),
+    //       child: filteredDokumens.length == 0
+    //           ? ListView.builder(
+    //               shrinkWrap: true,
+    //               itemCount: allDokumens.length,
+    //               itemBuilder: (BuildContext context, int index) {
+    //                 return GestureDetector(
+    //                   onTap: () {
+    //                     Navigator.of(context).pushNamed('/detailDokumen',
+    //                         arguments: jsonEncode(allDokumens[index]));
+    //                   },
+    //                   child: new Card(
+    //                     elevation: 12,
+    //                     color: backgroundColor13,
+    //                     shape: RoundedRectangleBorder(
+    //                       borderRadius: BorderRadius.circular(12),
+    //                     ),
+    //                     child: Row(
+    //                       children: [
+    //                         SizedBox(
+    //                           width: 15,
+    //                         ),
+    //                         Container(
+    //                           width: 40,
+    //                           height: 80,
+    //                           decoration: BoxDecoration(
+    //                             borderRadius: BorderRadius.circular(5),
+    //                             image: DecorationImage(
+    //                               image: AssetImage(
+    //                                 'assets/icon_goverment.png',
+    //                               ),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                         SizedBox(
+    //                           width: 12,
+    //                         ),
+    //                         Expanded(
+    //                           child: Column(
+    //                             crossAxisAlignment: CrossAxisAlignment.start,
+    //                             children: [
+    //                               Text(
+    //                                 '${allDokumens[index].keterangan_belanja}',
+    //                                 style: primaryTextStyle.copyWith(
+    //                                   fontWeight: semiBold,
+    //                                 ),
+    //                               ),
+    //                               Text(
+    //                                 '${allDokumens[index].instansi.nama_instansi}',
+    //                                 style: subtitleTextStyle.copyWith(
+    //                                   fontWeight: light,
+    //                                 ),
+    //                               ),
+    //                             ],
+    //                           ),
+    //                         ),
+    //                         Container(
+    //                           width: 23,
+    //                           height: 23,
+    //                           decoration: BoxDecoration(
+    //                             shape: BoxShape.circle,
+    //                             image: DecorationImage(
+    //                               image:
+    //                                   AssetImage('assets/icon_information.png'),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                         SizedBox(
+    //                           width: 15,
+    //                         ),
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 );
+    //               })
+    //           : ListView.builder(
+    //               shrinkWrap: true,
+    //               itemCount: filteredDokumens.length,
+    //               itemBuilder: (BuildContext context, int index) {
+    //                 return GestureDetector(
+    //                   onTap: () {
+    //                     Navigator.of(context).pushNamed('/detailDokumen',
+    //                         arguments: jsonEncode(filteredDokumens[index]));
+    //                   },
+    //                   child: new Card(
+    //                     elevation: 12,
+    //                     color: backgroundColor13,
+    //                     shape: RoundedRectangleBorder(
+    //                       borderRadius: BorderRadius.circular(12),
+    //                     ),
+    //                     child: Row(
+    //                       children: [
+    //                         SizedBox(
+    //                           width: 15,
+    //                         ),
+    //                         Container(
+    //                           width: 40,
+    //                           height: 80,
+    //                           decoration: BoxDecoration(
+    //                             borderRadius: BorderRadius.circular(5),
+    //                             image: DecorationImage(
+    //                               image: AssetImage(
+    //                                 'assets/icon_goverment.png',
+    //                               ),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                         SizedBox(
+    //                           width: 12,
+    //                         ),
+    //                         Expanded(
+    //                           child: Column(
+    //                             crossAxisAlignment: CrossAxisAlignment.start,
+    //                             children: [
+    //                               Text(
+    //                                 '${filteredDokumens[index].keterangan_belanja}',
+    //                                 style: primaryTextStyle.copyWith(
+    //                                   fontWeight: semiBold,
+    //                                 ),
+    //                               ),
+    //                               Text(
+    //                                 '${filteredDokumens[index].instansi.nama_instansi}',
+    //                                 style: subtitleTextStyle.copyWith(
+    //                                   fontWeight: light,
+    //                                 ),
+    //                               ),
+    //                             ],
+    //                           ),
+    //                         ),
+    //                         Container(
+    //                           width: 23,
+    //                           height: 23,
+    //                           decoration: BoxDecoration(
+    //                             shape: BoxShape.circle,
+    //                             image: DecorationImage(
+    //                               image:
+    //                                   AssetImage('assets/icon_information.png'),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                         SizedBox(
+    //                           width: 15,
+    //                         ),
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 );
+    //               })
+    //       // child: ListView.builder(
+    //       //     shrinkWrap: true,
+    //       //     itemCount: filteredDokumens.length,
+    //       //     itemBuilder: (BuildContext context, index){
+    //       //       return GestureDetector(
+    //       //         onTap: () {
+    //       //           Navigator.of(context).pushNamed('/detailDokumen', arguments: jsonEncode(filteredDokumens[index]));
+    //       //         },
+    //       //         child: new Card(
+    //       //           elevation: 12,
+    //       //           color: backgroundColor13,
+    //       //           shape: RoundedRectangleBorder(
+    //       //             borderRadius: BorderRadius.circular(12),
+    //       //           ),
+    //       //           child: Row(
+    //       //             children: [
+    //       //               SizedBox(
+    //       //                 width: 15,
+    //       //               ),
+    //       //               Container(
+    //       //                 width: 40,
+    //       //                 height: 80,
+    //       //                 decoration: BoxDecoration(
+    //       //                   borderRadius: BorderRadius.circular(5),
+    //       //                   image: DecorationImage(
+    //       //                     image: AssetImage(
+    //       //                       'assets/icon_goverment.png',
+    //       //                     ),
+    //       //                   ),
+    //       //                 ),
+    //       //               ),
+    //       //               SizedBox(
+    //       //                 width: 12,
+    //       //               ),
+    //       //               Expanded(
+    //       //                 child: Column(
+    //       //                   crossAxisAlignment: CrossAxisAlignment.start,
+    //       //                   children: [
+    //       //                     Text(
+    //       //                       '${filteredDokumens[index].keterangan_belanja}',
+    //       //                       style: primaryTextStyle.copyWith(
+    //       //                         fontWeight: semiBold,
+    //       //                       ),
+    //       //                     ),
+    //       //                     Text(
+    //       //                       '${filteredDokumens[index].instansi.nama_instansi}',
+    //       //                       style: subtitleTextStyle.copyWith(
+    //       //                         fontWeight: light,
+    //       //                       ),
+    //       //                     ),
+    //       //                   ],
+    //       //                 ),
+    //       //               ),
+    //       //               Container (
+    //       //                 width: 23,
+    //       //                 height: 23,
+    //       //                 decoration: BoxDecoration(
+    //       //                   shape: BoxShape.circle,
+    //       //                   image: DecorationImage(image: AssetImage('assets/icon_information.png'),),
+    //       //                 ),
+    //       //               ),
+    //       //               SizedBox(
+    //       //                 width: 15,
+    //       //               ),
+    //       //             ],
+    //       //           ),
+    //       //         ),
+    //       //       );
+    //       //     }
+    //       // ),
+
+    //       );
+    // }
