@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:eblendrang2/models/dokumen_model.dart';
+import 'package:eblendrang2/pages/home/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:eblendrang2/themes.dart';
 import 'package:image_picker/image_picker.dart';
@@ -145,20 +147,20 @@ class _DetailPage extends State<DetailPage> {
                     SizedBox(
                       width: 16,
                     ),
-                    // Expanded(
-                    //     child: TextFormField(
-                    //   readOnly: true,
-                    //   style: primaryTextStyle,
-                    //   decoration: InputDecoration(
-                    //     hintText: '' + (dokumen.instansi.namaInstansi),
-                    //     // hintStyle: inputStyle,
-                    //     enabledBorder: UnderlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: grayChoose,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )),
+                    Expanded(
+                        child: TextFormField(
+                      readOnly: true,
+                      style: primaryTextStyle,
+                      decoration: InputDecoration(
+                        hintText: '' + (dokumen.namaInstansi),
+                        // hintStyle: inputStyle,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: grayChoose,
+                          ),
+                        ),
+                      ),
+                    )),
                   ],
                 ),
               ),
@@ -251,26 +253,26 @@ class _DetailPage extends State<DetailPage> {
                       controller: dateInput,
                       style: primaryTextStyle,
                       readOnly: true,
-                      onTap: () async {
-                        DateTime? dateSPK = DateTime.parse(dokumen.tglSpk);
-                        dateSPK = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.parse(dokumen.tglSpk),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2101),
-                        );
-                        if (dateSPK != null) {
-                          print(dateSPK);
-                          String formattedDate =
-                              DateFormat('dd-MM-yyyy').format(dateSPK);
-                          print(formattedDate);
-                          setState(() {
-                            dateInput.text = formattedDate;
-                          });
-                        } else {
-                          print("Tanggal Kosong");
-                        }
-                      },
+                      // onTap: () async {
+                      //   DateTime? dateSPK = DateTime.parse(dokumen.tglSpk);
+                      //   dateSPK = await showDatePicker(
+                      //     context: context,
+                      //     initialDate: DateTime.parse(dokumen.tglSpk),
+                      //     firstDate: DateTime(2000),
+                      //     lastDate: DateTime(2101),
+                      //   );
+                      //   if (dateSPK != null) {
+                      //     print(dateSPK);
+                      //     String formattedDate =
+                      //         DateFormat('dd-MM-yyyy').format(dateSPK);
+                      //     print(formattedDate);
+                      //     setState(() {
+                      //       dateInput.text = formattedDate;
+                      //     });
+                      //   } else {
+                      //     print("Tanggal Kosong");
+                      //   }
+                      // },
                     )),
                   ],
                 ),
@@ -405,7 +407,7 @@ class _DetailPage extends State<DetailPage> {
             Expanded(
                 child: TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/pdf');
+                filtered1(context);
               },
               child: Text(
                 "File SPK",
@@ -450,7 +452,9 @@ class _DetailPage extends State<DetailPage> {
             ),
             Expanded(
                 child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                filtered1(context);
+              },
               child: Text(
                 "File BAST",
                 style: secondTextStyle.copyWith(
@@ -546,4 +550,76 @@ class _DetailPage extends State<DetailPage> {
       body: content(),
     );
   }
+}
+
+Future<AwesomeDialog> filtered1(
+  BuildContext context,
+) async {
+  int fIndex = 0;
+  return AwesomeDialog(
+    context: context,
+    animType: AnimType.scale,
+    dialogType: DialogType.question,
+    body: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(height: 10),
+        const Text("Pilih Actions...",
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.black)),
+        const SizedBox(height: 10),
+        InkWell(
+          onTap: () {},
+          child: Container(
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Color(0xff263238), width: 1),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(10),
+                child: Center(
+                  child: Text("UPLOAD DATA",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black)),
+                ),
+              )),
+        ),
+        const SizedBox(height: 10),
+        InkWell(
+          onTap: () {},
+          child: Container(
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Color(0xff263238), width: 1),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(10),
+                child: Center(
+                  child: Text("AMBIL DATA MANUAL",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black)),
+                ),
+              )),
+        ),
+        const SizedBox(height: 10),
+      ],
+    ),
+    title: 'Filter',
+    desc: 'Kategori :',
+    // btnCancelOnPress: () {
+    //   Navigator.pop(context);
+    // },
+  )..show();
 }

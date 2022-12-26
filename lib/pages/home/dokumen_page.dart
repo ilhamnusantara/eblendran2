@@ -663,7 +663,6 @@ class _DokumenPageState extends State<DokumenPage> {
 Future<AwesomeDialog> filtered(
   BuildContext context,
 ) async {
-  int? _value = 0;
   int fIndex = 0;
   return AwesomeDialog(
     context: context,
@@ -672,114 +671,102 @@ Future<AwesomeDialog> filtered(
     body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-            height: 60,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Color(0xff263238), width: 1),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Blm ada Foto",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black)),
-                  Radio(
-                    value: 1,
-                    activeColor: Colors.amber[30],
-                    groupValue: _value,
-                    onChanged: (value) {
-                      _value = value;
-                      // setState(() {
-                      //   _value = value as int?;
-                      // });
-                    },
-                  )
-                ],
-              ),
-            )),
         const SizedBox(height: 10),
-        Container(
-            height: 60,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Color(0xff263238), width: 1),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Blm ada SPK",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black)),
-                  Radio(
-                    value: 2,
-                    activeColor: Colors.amber[30],
-                    groupValue: _value,
-                    onChanged: (value) {
-                      _value = value;
-                      // setState(() {
-                      //   _value = value as int?;
-                      // });
-                    },
-                  )
-                ],
-              ),
-            )),
+        const Text("Filter File",
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.black)),
         const SizedBox(height: 10),
-        Container(
-            height: 60,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Color(0xff263238), width: 1),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Blm ada BAST",
+        InkWell(
+          onTap: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MainPage(cIndex: 1, fIndex: 1)));
+          },
+          child: Container(
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Color(0xff263238), width: 1),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(10),
+                child: Center(
+                  child: Text("Blm ada Foto",
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Colors.black)),
-                  Radio(
-                    value: 3,
-                    activeColor: Colors.amber[30],
-                    groupValue: _value,
-                    onChanged: (value) {
-                      _value = value;
-                      // setState(() {
-                      //   _value = value as int?;
-                      // });
-                    },
-                  )
-                ],
+                ),
+              )),
+        ),
+        const SizedBox(height: 10),
+        InkWell(
+          onTap: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MainPage(cIndex: 1, fIndex: 2)));
+          },
+          child: Container(
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Color(0xff263238), width: 1),
               ),
-            )),
+              child: const Padding(
+                padding: EdgeInsets.all(10),
+                child: Center(
+                  child: Text("Blm ada SPK",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black)),
+                ),
+              )),
+        ),
+        const SizedBox(height: 10),
+        InkWell(
+          onTap: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MainPage(cIndex: 1, fIndex: 3)));
+          },
+          child: Container(
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Color(0xff263238), width: 1),
+              ),
+              child: const Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Center(
+                    child: Text("Blm ada BAST",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black)),
+                  ))),
+        ),
         const SizedBox(height: 10),
       ],
     ),
     title: 'Filter',
     desc: 'Kategori :',
-    btnOkOnPress: () {
+    btnCancelOnPress: () {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => MainPage(cIndex: 1, fIndex: fIndex)));
+              builder: (context) => MainPage(cIndex: 1, fIndex: 0)));
     },
   )..show();
 }

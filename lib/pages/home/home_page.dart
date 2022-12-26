@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:eblendrang2/models/instansi_model.dart';
 import 'package:eblendrang2/models/models.dart';
-import 'package:eblendrang2/models/user_model.dart';
 import 'package:eblendrang2/pages/page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:eblendrang2/pages/widgets/instansi_title.dart';
@@ -138,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                   if (state is InstansiLoadingState) {
                     return const CircularProgressIndicator();
                   } else if (state is InstansiLoadedState) {
-                    List<Instansi> instansi = (aa[0] == '0')
+                    List<Instansi> instansi = (aa[0] == 0)
                         ? state.instansiList
                             .where((element) => element.idInstansi == aa[1])
                             .toList()
@@ -249,8 +248,8 @@ class _HomePageState extends State<HomePage> {
 Future<List> getPrefs() async {
   final SharedPreferences pref = await SharedPreferences.getInstance();
 
-  String? status = pref.getString('status');
-  String? id_instansi = pref.getString('idInstansi');
-  var a = ["${status!}", "${id_instansi!}"];
+  int? status = pref.getInt('status');
+  int? id_instansi = pref.getInt('idInstansi');
+  var a = [status!, id_instansi!];
   return a;
 }

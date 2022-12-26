@@ -62,7 +62,7 @@ class UserClass extends Equatable {
   final String username;
   final int idInstansi;
   final String email;
-  final String status;
+  final int status;
   final dynamic emailVerifiedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -73,7 +73,7 @@ class UserClass extends Equatable {
     required String username,
     required int idInstansi,
     required String email,
-    required String status,
+    required int status,
     required dynamic emailVerifiedAt,
     required DateTime createdAt,
     required DateTime updatedAt,
@@ -96,7 +96,7 @@ class UserClass extends Equatable {
         username: json["username"],
         idInstansi: json["id_instansi"],
         email: json["email"],
-        status: json["status"],
+        status: int.parse(json["status"]),
         emailVerifiedAt: json["email_verified_at"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),

@@ -10,8 +10,13 @@ class CustomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
+    return Container(
+      height: 200,
+      width: 200,
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.lightBlueAccent, width: 1)),
       child: Stack(
         children: [
           Container(

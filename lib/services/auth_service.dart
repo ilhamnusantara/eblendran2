@@ -63,8 +63,8 @@ class AuthService {
       final SharedPreferences pref = await SharedPreferences.getInstance();
       // UserModel user = UserModel.fromJson(data['user']);
       User user = User.fromJson(data);
-      pref.setString('status', user.user.status);
-      pref.setString('idInstansi', user.user.idInstansi.toString());
+      pref.setInt('status', user.user.status);
+      pref.setInt('idInstansi', user.user.idInstansi);
       return user;
     } else {
       throw Exception('Gagal Login');
