@@ -201,7 +201,7 @@ class _DokumenPageState extends State<DokumenPage> {
           child:
               BlocBuilder<DokumenBloc, DokumenState>(builder: (context, state) {
             if (state is DokumenLoadingState) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             } else if (state is DokumenLoadedState) {
               List<Dokumen> dokumen = state.dokumenList.toList();
               if (dokumen.isNotEmpty) {
@@ -309,7 +309,7 @@ class _DokumenPageState extends State<DokumenPage> {
           child:
               BlocBuilder<DokumenBloc, DokumenState>(builder: (context, state) {
             if (state is DokumenLoadingState) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             } else if (state is DokumenLoadedState) {
               List<Dokumen> dokumen = state.dokumenList
                   .where((element) =>
@@ -420,7 +420,7 @@ class _DokumenPageState extends State<DokumenPage> {
           child:
               BlocBuilder<DokumenBloc, DokumenState>(builder: (context, state) {
             if (state is DokumenLoadingState) {
-              return CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             } else if (state is DokumenLoadedState) {
               List<Dokumen> dokumen = state.dokumenList
                   .where((element) =>
@@ -531,7 +531,7 @@ class _DokumenPageState extends State<DokumenPage> {
           child:
               BlocBuilder<DokumenBloc, DokumenState>(builder: (context, state) {
             if (state is DokumenLoadingState) {
-              return CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             } else if (state is DokumenLoadedState) {
               List<Dokumen> dokumen = state.dokumenList
                   .where((element) =>

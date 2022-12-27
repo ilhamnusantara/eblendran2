@@ -152,13 +152,13 @@ class _DetailPage extends State<DetailPage> {
                       readOnly: true,
                       style: primaryTextStyle,
                       decoration: InputDecoration(
-                        hintText: '' + (dokumen.namaInstansi),
+                        hintText: dokumen.namaInstansi,
                         // hintStyle: inputStyle,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: grayChoose,
-                          ),
-                        ),
+                        // enabledBorder: UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: grayChoose,
+                        //   ),
+                        // ),
                       ),
                     )),
                   ],
@@ -202,7 +202,7 @@ class _DetailPage extends State<DetailPage> {
                         child: TextFormField(
                       style: primaryTextStyle,
                       decoration: InputDecoration(
-                        hintText: '' + (dokumen.noSpk.toString()),
+                        hintText: dokumen.noSpk.toString(),
                         hintStyle: inputStyle,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -249,30 +249,32 @@ class _DetailPage extends State<DetailPage> {
                       width: 16,
                     ),
                     Expanded(
-                        child: TextFormField(
+                        child: TextField(
+                      decoration: InputDecoration(hintText: dokumen.tglSpk),
                       controller: dateInput,
                       style: primaryTextStyle,
                       readOnly: true,
-                      // onTap: () async {
-                      //   DateTime? dateSPK = DateTime.parse(dokumen.tglSpk);
-                      //   dateSPK = await showDatePicker(
-                      //     context: context,
-                      //     initialDate: DateTime.parse(dokumen.tglSpk),
-                      //     firstDate: DateTime(2000),
-                      //     lastDate: DateTime(2101),
-                      //   );
-                      //   if (dateSPK != null) {
-                      //     print(dateSPK);
-                      //     String formattedDate =
-                      //         DateFormat('dd-MM-yyyy').format(dateSPK);
-                      //     print(formattedDate);
-                      //     setState(() {
-                      //       dateInput.text = formattedDate;
-                      //     });
-                      //   } else {
-                      //     print("Tanggal Kosong");
-                      //   }
-                      // },
+                      onTap: () async {
+                        DateTime? dateSPK = await showDatePicker(
+                          context: context,
+                          initialDate: (dokumen.tglSpk != 'Not Detect')
+                              ? DateTime.parse(dokumen.tglSpk)
+                              : DateTime.now(),
+                          firstDate: DateTime(2021),
+                          lastDate: DateTime(2101),
+                        );
+                        if (dateSPK != null) {
+                          print(dateSPK);
+                          String formattedDate =
+                              DateFormat('yyyy-MM-dd').format(dateSPK);
+                          print(formattedDate);
+                          setState(() {
+                            dateInput.text = formattedDate;
+                          });
+                        } else {
+                          print("Tanggal Kosong");
+                        }
+                      },
                     )),
                   ],
                 ),
@@ -364,19 +366,22 @@ class _DetailPage extends State<DetailPage> {
                     Expanded(
                         child: TextFormField(
                       controller: dateInput2,
+                      decoration: InputDecoration(hintText: dokumen.tglBast),
                       style: primaryTextStyle,
                       readOnly: true,
                       onTap: () async {
                         DateTime? dateBAST = await showDatePicker(
                           context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
+                          initialDate: (dokumen.noBast != 'Not Detect')
+                              ? DateTime.parse(dokumen.tglBast)
+                              : DateTime.now(),
+                          firstDate: DateTime(2021),
                           lastDate: DateTime(2101),
                         );
                         if (dateBAST != null) {
                           print(dateBAST);
                           String formattedDate =
-                              DateFormat('dd-MM-yyyy').format(dateBAST);
+                              DateFormat('yyyy-MM-dd').format(dateBAST);
                           print(formattedDate);
                           setState(() {
                             dateInput2.text = formattedDate;

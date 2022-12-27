@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                 child: BlocBuilder<InstansiBloc, InstansiState>(
                     builder: (context, state) {
                   if (state is InstansiLoadingState) {
-                    return const CircularProgressIndicator();
+                    return const Center(child: CircularProgressIndicator());
                   } else if (state is InstansiLoadedState) {
                     List<Instansi> instansi = (aa[0] == 0)
                         ? state.instansiList
