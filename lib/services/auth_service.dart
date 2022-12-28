@@ -64,6 +64,9 @@ class AuthService {
       final SharedPreferences pref = await SharedPreferences.getInstance();
       // UserModel user = UserModel.fromJson(data['user']);
       User user = User.fromJson(data);
+      pref.setString("accessToken", user.accessToken);
+      pref.setString("name", user.user.name);
+      pref.setString("username", user.user.username);
       pref.setInt('status', user.user.status);
       pref.setInt('idInstansi', user.user.idInstansi);
       return user;

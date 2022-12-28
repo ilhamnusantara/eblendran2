@@ -15,10 +15,23 @@ import 'package:eblendrang2/services/instansi_services.dart';
 import 'package:flutter/material.dart';
 import 'package:eblendrang2/pages/splash_screen_page.dart';
 import 'package:eblendrang2/blocs/blocs_exports.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String auth = prefs.getString("accessToken");
+  FlutterNativeSplash.remove();
+  runApp(MyApp());
+  // if (auth == null) {
+  //   FlutterNativeSplash.remove();
+  //   runApp(MyApp());
+  // } else {}
+}
 
 class MyApp extends StatelessWidget {
   @override
