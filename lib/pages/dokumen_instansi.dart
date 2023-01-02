@@ -25,8 +25,13 @@ class _DokumenInstansiState extends State<DokumenInstansi> {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/detailDokumen',
-                          arguments: jsonEncode(widget.docList![index]));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                    dokumen: widget.docList![index],
+                                    namaInstansi: widget.namaInstansi,
+                                  )));
                     },
                     child: new Card(
                       elevation: 12,

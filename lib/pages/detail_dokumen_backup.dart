@@ -8,14 +8,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
-class DetailPage extends StatefulWidget {
+class DetailPage2 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _DetailPage();
+    return _DetailPage2();
   }
 }
 
-class _DetailPage extends State<DetailPage> {
+class _DetailPage2 extends State<DetailPage2> {
   var keterangan_belanja = "";
   late DokumenModel dokumen;
   // List data = widget.dokumen;

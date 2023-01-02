@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:eblendrang2/models/dokumen_model.dart';
 import 'package:eblendrang2/pages/home/main_page.dart';
+import 'package:eblendrang2/services/dokumen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:eblendrang2/themes.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +14,10 @@ import 'package:http/http.dart' as http;
 import '../models/models.dart';
 
 class DetailPage extends StatefulWidget {
+  final Dokumen dokumen;
+  String? namaInstansi;
+  DetailPage({required this.dokumen, this.namaInstansi});
+
   @override
   State<StatefulWidget> createState() {
     return _DetailPage();
@@ -20,8 +25,8 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPage extends State<DetailPage> {
-  var keterangan_belanja = "";
-  late Dokumen dokumen;
+  TextEditingController noSpk = TextEditingController();
+  TextEditingController noBast = TextEditingController();
   // List data = widget.dokumen;
   @override
   void initState() {
@@ -31,22 +36,22 @@ class _DetailPage extends State<DetailPage> {
     // _getData();
   }
 
-  @override
-  void didChangeDependencies() {
-    var dokumenString = ModalRoute.of(context)?.settings.arguments as String;
-    print('page 2');
-    print(dokumenString);
+  // @override
+  // void didChangeDependencies() {
+  //   var dokumenString = ModalRoute.of(context)?.settings.arguments as String;
+  //   print('page 2');
+  //   print(dokumenString);
 
-    var dokumenJson = jsonDecode(dokumenString);
-    print(dokumenJson);
+  //   var dokumenJson = jsonDecode(dokumenString);
+  //   print(dokumenJson);
 
-    setState(() {
-      dokumen = Dokumen.fromJson(dokumenJson);
-      keterangan_belanja = dokumen.keteranganBelanja;
-    });
+  //   setState(() {
+  //     dokumen = Dokumen.fromJson(dokumenJson);
+  //     keterangan_belanja = dokumen.keteranganBelanja;
+  //   });
 
-    super.didChangeDependencies();
-  }
+  //   super.didChangeDependencies();
+  // }
 
   TextEditingController dateInput = TextEditingController();
   TextEditingController dateInput2 = TextEditingController();
@@ -85,6 +90,7 @@ class _DetailPage extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    var keterangan_belanja = widget.dokumen.keteranganBelanja;
     Widget header() {
       return AppBar(
         backgroundColor: backgroundColor2,
@@ -152,7 +158,9 @@ class _DetailPage extends State<DetailPage> {
                       readOnly: true,
                       style: primaryTextStyle,
                       decoration: InputDecoration(
-                        hintText: dokumen.namaInstansi,
+                        hintText: widget.namaInstansi == null
+                            ? widget.dokumen.namaInstansi
+                            : widget.namaInstansi,
                         // hintStyle: inputStyle,
                         // enabledBorder: UnderlineInputBorder(
                         //   borderSide: BorderSide(
@@ -201,8 +209,9 @@ class _DetailPage extends State<DetailPage> {
                     Expanded(
                         child: TextFormField(
                       style: primaryTextStyle,
+                      controller: noSpk,
                       decoration: InputDecoration(
-                        hintText: dokumen.noSpk.toString(),
+                        hintText: widget.dokumen.noSpk.toString(),
                         hintStyle: inputStyle,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -250,15 +259,16 @@ class _DetailPage extends State<DetailPage> {
                     ),
                     Expanded(
                         child: TextField(
-                      decoration: InputDecoration(hintText: dokumen.tglSpk),
+                      decoration:
+                          InputDecoration(hintText: widget.dokumen.tglSpk),
                       controller: dateInput,
                       style: primaryTextStyle,
                       readOnly: true,
                       onTap: () async {
                         DateTime? dateSPK = await showDatePicker(
                           context: context,
-                          initialDate: (dokumen.tglSpk != 'Not Detect')
-                              ? DateTime.parse(dokumen.tglSpk)
+                          initialDate: (widget.dokumen.tglSpk != 'Not Detect')
+                              ? DateTime.parse(widget.dokumen.tglSpk)
                               : DateTime.now(),
                           firstDate: DateTime(2021),
                           lastDate: DateTime(2101),
@@ -316,8 +326,9 @@ class _DetailPage extends State<DetailPage> {
                     Expanded(
                         child: TextFormField(
                       style: primaryTextStyle,
+                      controller: noBast,
                       decoration: InputDecoration(
-                        hintText: '' + (dokumen.noBast.toString()),
+                        hintText: '' + (widget.dokumen.noBast.toString()),
                         hintStyle: inputStyle,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -366,14 +377,15 @@ class _DetailPage extends State<DetailPage> {
                     Expanded(
                         child: TextFormField(
                       controller: dateInput2,
-                      decoration: InputDecoration(hintText: dokumen.tglBast),
+                      decoration:
+                          InputDecoration(hintText: widget.dokumen.tglBast),
                       style: primaryTextStyle,
                       readOnly: true,
                       onTap: () async {
                         DateTime? dateBAST = await showDatePicker(
                           context: context,
-                          initialDate: (dokumen.noBast != 'Not Detect')
-                              ? DateTime.parse(dokumen.tglBast)
+                          initialDate: (widget.dokumen.noBast != 'Not Detect')
+                              ? DateTime.parse(widget.dokumen.tglBast)
                               : DateTime.now(),
                           firstDate: DateTime(2021),
                           lastDate: DateTime(2101),
@@ -499,7 +511,7 @@ class _DetailPage extends State<DetailPage> {
               child: Column(
                 children: [
                   Text(
-                    '' + (dokumen.keteranganBelanja),
+                    '' + (keterangan_belanja),
                     style: primaryTextStyle.copyWith(
                       fontSize: 25,
                       fontWeight: reguler,
@@ -547,7 +559,42 @@ class _DetailPage extends State<DetailPage> {
               Icons.check,
               color: primaryColor,
             ),
-            onPressed: () {},
+            onPressed: () async {
+              String res = await DokumenService().updateDokumen(
+                  widget.dokumen.idDokumen.toString(),
+                  dateInput.text,
+                  noSpk.text,
+                  noBast.text,
+                  dateInput2.text);
+              if (res.toUpperCase().contains("Gagal Update Data")) {
+                // ignore: use_build_context_synchronously
+                AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.error,
+                  animType: AnimType.rightSlide,
+                  title: 'Warning !',
+                  desc: res,
+                  btnOkOnPress: () {
+                    Navigator.pop(context);
+                  },
+                ).show();
+              } else {
+                AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.success,
+                  animType: AnimType.rightSlide,
+                  title: 'Selamat..',
+                  desc: res,
+                  btnOkOnPress: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MainPage(cIndex: 0, fIndex: 0)));
+                  },
+                ).show();
+              }
+            },
           ),
         ],
         foregroundColor: blck,
