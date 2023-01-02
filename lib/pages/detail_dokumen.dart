@@ -90,7 +90,7 @@ class _DetailPage extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    var keterangan_belanja = widget.dokumen.keteranganBelanja;
+    // var keterangan_belanja = widget.dokumen.keteranganBelanja;
     Widget header() {
       return AppBar(
         backgroundColor: backgroundColor2,
@@ -511,7 +511,7 @@ class _DetailPage extends State<DetailPage> {
               child: Column(
                 children: [
                   Text(
-                    '' + (keterangan_belanja),
+                    '' + (widget.dokumen.keteranganBelanja),
                     style: primaryTextStyle.copyWith(
                       fontSize: 25,
                       fontWeight: reguler,
