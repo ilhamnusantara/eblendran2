@@ -20,20 +20,19 @@ class DokumenService {
   //     print(e);
   //   }
   // }
-  Future<String> updateDokumen(String? idDok, String? tgl_spk, String? no_spk,
-      String? no_bast, String? tgl_bast) async {
+  Future<int> updateDokumen(Dokumen docs) async {
     var path =
-        "$baseUrl/dokumenUpdate?id_dokumen=${idDok}&tgl_spk=${tgl_spk}&no_spk=${no_spk}&no_bast=${no_bast}&tgl_bast=${tgl_bast}";
+        "$baseUrl/dokumenUpdate?id_dokumen=${docs.idDokumen}&tgl_spk=${docs.tglSpk}&no_spk=${docs.noSpk}&no_bast=${docs.noBast}&tgl_bast=${docs.tglBast}";
     var headers = {'Content-Type': 'application/json'};
     var response = await http.put(Uri.parse(path), headers: headers);
     debugPrint(response.statusCode.toString());
     debugPrint("path=> $path");
     if (response.statusCode == 200) {
       // print(dokumens);
-      return "Pembaruan Dokumen Berhasil di Simpan..";
+      return response.statusCode;
     } else {
       // throw Exception('Gagal Get Dokumen!');
-      return "Gagal Update Data";
+      return response.statusCode;
     }
   }
 

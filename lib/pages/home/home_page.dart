@@ -28,6 +28,13 @@ class _HomePageState extends State<HomePage> {
   // List<Instansi> allinstansis = [];
 
   // Future<void> _getInstansi() async {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<InstansiBloc>().add(LoadInstansi());
+  }
+
   //   try {
   //     final response =
   //         await http.get(Uri.parse("http://103.23.198.126/api/dokumenValue"));

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:eblendrang2/blocs/blocs_exports.dart';
 import 'package:eblendrang2/models/dokumen_model.dart';
 import 'package:eblendrang2/pages/home/main_page.dart';
 import 'package:eblendrang2/services/dokumen_service.dart';
@@ -27,37 +28,20 @@ class DetailPage extends StatefulWidget {
 class _DetailPage extends State<DetailPage> {
   TextEditingController noSpk = TextEditingController();
   TextEditingController noBast = TextEditingController();
-  // List data = widget.dokumen;
-  @override
-  void initState() {
-    super.initState();
-    dateInput.text = "";
-    dateInput2.text = "";
-    // _getData();
-  }
-
-  // @override
-  // void didChangeDependencies() {
-  //   var dokumenString = ModalRoute.of(context)?.settings.arguments as String;
-  //   print('page 2');
-  //   print(dokumenString);
-
-  //   var dokumenJson = jsonDecode(dokumenString);
-  //   print(dokumenJson);
-
-  //   setState(() {
-  //     dokumen = Dokumen.fromJson(dokumenJson);
-  //     keterangan_belanja = dokumen.keteranganBelanja;
-  //   });
-
-  //   super.didChangeDependencies();
-  // }
-
   TextEditingController dateInput = TextEditingController();
   TextEditingController dateInput2 = TextEditingController();
   late File _foto;
   late PickedFile _pickedFile;
   final _picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    dateInput2.text = widget.dokumen.tglBast;
+    dateInput.text = widget.dokumen.tglSpk;
+    noBast.text = widget.dokumen.noBast;
+    noSpk.text = widget.dokumen.noSpk;
+  }
 
   Future<void> _chooseImageFromCamera() async {
     _pickedFile = (await _picker.getImage(source: ImageSource.camera))!;
@@ -90,39 +74,6 @@ class _DetailPage extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    // var keterangan_belanja = widget.dokumen.keteranganBelanja;
-    Widget header() {
-      return AppBar(
-        backgroundColor: backgroundColor2,
-        leading: IconButton(
-          icon: Icon(Icons.close),
-          color: Colors.white,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        centerTitle: true,
-        elevation: 0,
-        title: Text(
-          'Detail Dokumen',
-          style: secondTextStyle.copyWith(
-            fontSize: 18,
-            fontWeight: medium,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.check,
-              color: primaryColor,
-            ),
-            onPressed: () {},
-          ),
-        ],
-        foregroundColor: blck,
-      );
-    }
-
     Widget nameInstansi() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -282,7 +233,7 @@ class _DetailPage extends State<DetailPage> {
                             dateInput.text = formattedDate;
                           });
                         } else {
-                          print("Tanggal Kosong");
+                          dateInput.text = widget.dokumen.tglSpk;
                         }
                       },
                     )),
@@ -399,7 +350,7 @@ class _DetailPage extends State<DetailPage> {
                             dateInput2.text = formattedDate;
                           });
                         } else {
-                          print("Tanggal Kosong");
+                          dateInput2.text = widget.dokumen.tglBast;
                         }
                       },
                     )),
@@ -560,20 +511,28 @@ class _DetailPage extends State<DetailPage> {
               color: primaryColor,
             ),
             onPressed: () async {
-              String res = await DokumenService().updateDokumen(
-                  widget.dokumen.idDokumen.toString(),
-                  dateInput.text,
-                  noSpk.text,
-                  noBast.text,
-                  dateInput2.text);
-              if (res.toUpperCase().contains("Gagal Update Data")) {
+              Dokumen docs = widget.dokumen.copyWith(
+                  tglSpk: (dateInput.text == null)
+                      ? widget.dokumen.tglSpk
+                      : dateInput.text,
+                  noSpk:
+                      (noSpk.text == null) ? widget.dokumen.noSpk : noSpk.text,
+                  noBast: (noBast.text == null)
+                      ? widget.dokumen.noBast
+                      : noBast.text,
+                  tglBast: (dateInput2.text == null)
+                      ? widget.dokumen.tglBast
+                      : dateInput2.text);
+              debugPrint("${docs.noBast}|${docs.tglSpk}|${docs.noSpk}");
+              int res = await DokumenService().updateDokumen(docs);
+              if (res != 200) {
                 // ignore: use_build_context_synchronously
                 AwesomeDialog(
                   context: context,
                   dialogType: DialogType.error,
                   animType: AnimType.rightSlide,
                   title: 'Warning !',
-                  desc: res,
+                  desc: "Gagal upload Data, Silahkan ulangi sekali lagi...",
                   btnOkOnPress: () {
                     Navigator.pop(context);
                   },
@@ -584,8 +543,9 @@ class _DetailPage extends State<DetailPage> {
                   dialogType: DialogType.success,
                   animType: AnimType.rightSlide,
                   title: 'Selamat..',
-                  desc: res,
-                  btnOkOnPress: () {
+                  desc: "Data berhasil di update.. Terimakasih.",
+                  btnOkOnPress: () async {
+                    setState(() {});
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
