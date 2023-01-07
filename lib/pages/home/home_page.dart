@@ -128,118 +128,123 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget item() {
-      return FutureBuilder(
-          future: getPrefs(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              var aa = snapshot.data!;
-              return Container(
-                margin: EdgeInsets.only(
-                  top: 8,
-                  left: marginLogin,
-                  right: marginLogin,
-                ),
-                child: BlocBuilder<InstansiBloc, InstansiState>(
-                    builder: (context, state) {
-                  if (state is InstansiLoadingState) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is InstansiLoadedState) {
-                    List<Instansi> instansi = (aa[0] == 0)
-                        ? state.instansiList
-                            .where((element) => element.idInstansi == aa[1])
-                            .toList()
-                        : state.instansiList;
-                    if (instansi.isNotEmpty) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: instansi.length,
-                        padding: new EdgeInsets.only(
-                          top: 10,
-                        ),
-                        itemBuilder: (BuildContext context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => DokumenInstansi(
-                                        docList: instansi[index].dokumenList,
-                                        namaInstansi:
-                                            instansi[index].namaInstansi,
-                                      )));
-                            },
-                            child: new Card(
-                              elevation: 12,
-                              color: backgroundColor13,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Container(
-                                    width: 40,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          'assets/icon_goverment.png',
+      return RefreshIndicator(
+        onRefresh: () async {
+          context.read<InstansiBloc>().add(LoadInstansi());
+        },
+        child: FutureBuilder(
+            future: getPrefs(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                var aa = snapshot.data!;
+                return Container(
+                  margin: EdgeInsets.only(
+                    top: 8,
+                    left: marginLogin,
+                    right: marginLogin,
+                  ),
+                  child: BlocBuilder<InstansiBloc, InstansiState>(
+                      builder: (context, state) {
+                    if (state is InstansiLoadingState) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is InstansiLoadedState) {
+                      List<Instansi> instansi = (aa[0] == 0)
+                          ? state.instansiList
+                              .where((element) => element.idInstansi == aa[1])
+                              .toList()
+                          : state.instansiList;
+                      if (instansi.isNotEmpty) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: instansi.length,
+                          padding: new EdgeInsets.only(
+                            top: 10,
+                          ),
+                          itemBuilder: (BuildContext context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => DokumenInstansi(
+                                          docList: instansi[index].dokumenList,
+                                          namaInstansi:
+                                              instansi[index].namaInstansi,
+                                        )));
+                              },
+                              child: new Card(
+                                elevation: 12,
+                                color: backgroundColor13,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Container(
+                                      width: 40,
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'assets/icon_goverment.png',
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${instansi[index].namaInstansi}',
-                                          style: primaryTextStyle.copyWith(
-                                            fontWeight: semiBold,
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${instansi[index].namaInstansi}',
+                                            style: primaryTextStyle.copyWith(
+                                              fontWeight: semiBold,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    '${instansi[index].dokumen_count} Item',
-                                    style: inputStyle.copyWith(
-                                      fontSize: 12,
+                                    Text(
+                                      '${instansi[index].dokumen_count} Item',
+                                      style: inputStyle.copyWith(
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  )
-                                ],
+                                    SizedBox(
+                                      width: 15,
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      );
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: Text(
+                            "No Data",
+                            style: primaryTextStyle,
+                          ),
+                        );
+                      }
                     } else {
-                      return Center(
-                        child: Text(
-                          "No Data",
-                          style: primaryTextStyle,
-                        ),
+                      return const Center(
+                        child: Text("ERROR"),
                       );
                     }
-                  } else {
-                    return const Center(
-                      child: Text("ERROR"),
-                    );
-                  }
-                }),
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          });
+                  }),
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            }),
+      );
     }
 
     return ListView(
