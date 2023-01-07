@@ -523,7 +523,8 @@ class _DetailPage extends State<DetailPage> {
                   tglBast: (dateInput2.text == null)
                       ? widget.dokumen.tglBast
                       : dateInput2.text);
-              debugPrint("${docs.noBast}|${docs.tglSpk}|${docs.noSpk}");
+              debugPrint(
+                  "${docs.noBast}|${docs.tglSpk}|${docs.noSpk}|${docs.keteranganBelanja}");
               int res = await DokumenService().updateDokumen(docs);
               if (res != 200) {
                 // ignore: use_build_context_synchronously
