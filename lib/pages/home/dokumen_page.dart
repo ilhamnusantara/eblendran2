@@ -335,6 +335,14 @@ class _DokumenPageState extends State<DokumenPage> {
                         onTap: () {
                           // Navigator.of(context).pushNamed('/detailDokumen',
                           //     arguments: jsonEncode(dokumen[index]));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailPage(
+                                        dokumen: dokumen[index],
+                                        namaInstansi:
+                                            dokumen[index].namaInstansi,
+                                      )));
                         },
                         child: Card(
                           elevation: 12,
@@ -446,6 +454,14 @@ class _DokumenPageState extends State<DokumenPage> {
                         onTap: () {
                           // Navigator.of(context).pushNamed('/detailDokumen',
                           //     arguments: jsonEncode(dokumen[index]));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailPage(
+                                        dokumen: dokumen[index],
+                                        namaInstansi:
+                                            dokumen[index].namaInstansi,
+                                      )));
                         },
                         child: Card(
                           elevation: 12,
@@ -557,6 +573,14 @@ class _DokumenPageState extends State<DokumenPage> {
                         onTap: () {
                           // Navigator.of(context).pushNamed('/detailDokumen',
                           //     arguments: jsonEncode(dokumen[index]));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailPage(
+                                        dokumen: dokumen[index],
+                                        namaInstansi:
+                                            dokumen[index].namaInstansi,
+                                      )));
                         },
                         child: Card(
                           elevation: 12,

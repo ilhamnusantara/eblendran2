@@ -18,6 +18,7 @@ class Instansi extends Equatable {
   final String alamat;
   final String noTelp;
   // final int data_null;
+
   final dynamic createdAt;
   final dynamic updatedAt;
   final List<Dokumen>? dokumenList;
