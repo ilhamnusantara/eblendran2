@@ -9,14 +9,14 @@ class Instansi extends Equatable {
     required this.noTelp,
     required this.createdAt,
     required this.updatedAt,
-    required this.data_null,
+    required this.dokumen_count,
   });
 
   final int idInstansi;
   final String namaInstansi;
   final String alamat;
   final String noTelp;
-  final int data_null;
+  final int dokumen_count;
   final dynamic createdAt;
   final dynamic updatedAt;
   final List<Dokumen>? dokumenList;
@@ -28,7 +28,7 @@ class Instansi extends Equatable {
           required String noTelp,
           required dynamic createdAt,
           required dynamic updatedAt,
-          required int data_null,
+          required int dokumen_count,
           List<Dokumen>? dokumenList}) =>
       Instansi(
         idInstansi: idInstansi ?? this.idInstansi,
@@ -36,7 +36,7 @@ class Instansi extends Equatable {
         alamat: alamat ?? this.alamat,
         noTelp: noTelp ?? this.noTelp,
         dokumenList: dokumenList ?? this.dokumenList,
-        data_null: data_null ?? this.data_null,
+        dokumen_count: dokumen_count ?? this.dokumen_count,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -46,7 +46,8 @@ class Instansi extends Equatable {
       namaInstansi: json["nama_instansi"],
       alamat: json["alamat"],
       noTelp: json["no_telp"],
-      data_null: (json['data_null'] == null) ? 0 : json['data_null'],
+      dokumen_count:
+          (json['dokumen_count'] == null) ? 0 : json['dokumen_count'],
       createdAt: json["created_at"],
       updatedAt: json["updated_at"],
       dokumenList:
@@ -64,5 +65,5 @@ class Instansi extends Equatable {
 
   @override
   List<Object?> get props =>
-      [idInstansi, namaInstansi, alamat, noTelp, dokumenList, data_null];
+      [idInstansi, namaInstansi, alamat, noTelp, dokumenList, dokumen_count];
 }

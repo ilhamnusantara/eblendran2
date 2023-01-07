@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   Text(
-                                    '${instansi[index].data_null} Item',
+                                    '${instansi[index].dokumen_count} Item',
                                     style: inputStyle.copyWith(
                                       fontSize: 12,
                                     ),
