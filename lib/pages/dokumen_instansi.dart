@@ -70,7 +70,7 @@ class _DokumenInstansiState extends State<DokumenInstansi> {
                                   ),
                                 ),
                                 Text(
-                                  '${widget.docList![index].idInstansi}',
+                                  '${widget.namaInstansi}',
                                   style: subtitleTextStyle.copyWith(
                                     fontWeight: light,
                                   ),
@@ -109,7 +109,7 @@ class _DokumenInstansiState extends State<DokumenInstansi> {
         Navigator.pop(context);
       },
       title: widget.namaInstansi,
-      subtitle: "List Dokumen",
+      subtitle: "List data dokumen yang masih kosong",
       child: item(),
     );
   }

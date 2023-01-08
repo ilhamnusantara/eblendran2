@@ -18,12 +18,12 @@ class _MainPageState extends State<MainPage> {
     Widget addButton() {
       return FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/addAll');
+          Navigator.pushNamed(context, '/informasi');
         },
         backgroundColor: Colors.white,
         child: Image.asset(
-          'assets/icon_add.png',
-          width: 38,
+          'assets/icon_information2.png',
+          width: 33,
         ),
       );
     }

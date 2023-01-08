@@ -145,7 +145,7 @@ class _AddData extends State<AddData> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                       ),
                     ),
@@ -154,7 +154,7 @@ class _AddData extends State<AddData> {
                     'assets/icon_success.png',
                     width: 100,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   Text(
@@ -164,14 +164,14 @@ class _AddData extends State<AddData> {
                       fontWeight: semiBold,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   Text(
                     'Data added successfully',
                     style: subtitleTextStyle,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
@@ -264,7 +264,7 @@ class _AddData extends State<AddData> {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Container(

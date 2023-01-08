@@ -13,4 +13,5 @@ import '../providers/auth_provider.dart';
 import '../themes.dart';
 
 part 'dokumen_instansi.dart';
+part 'informasi.dart';
 part 'general_page.dart';
