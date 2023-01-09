@@ -109,7 +109,7 @@ class _DokumenInstansiState extends State<DokumenInstansi> {
         Navigator.pop(context);
       },
       title: widget.namaInstansi,
-      subtitle: "List data dokumen yang masih kosong",
+      subtitle: "List dokumen yang masih kosong",
       child: item(),
     );
   }

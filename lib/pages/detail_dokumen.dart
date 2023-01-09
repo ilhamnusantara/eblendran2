@@ -43,33 +43,122 @@ class _DetailPage extends State<DetailPage> {
     noSpk.text = widget.dokumen.noSpk;
   }
 
-  Future<void> _chooseImageFromCamera() async {
-    _pickedFile = (await _picker.getImage(source: ImageSource.camera))!;
+  Future<void> _chooseImageFromCamera(
+      String path, String field, String dir) async {
+    final _pickedFile = (dir.toUpperCase().contains("CAMERA"))
+        ? await _picker.getImage(source: ImageSource.camera, imageQuality: 50)
+        : await _picker.getImage(source: ImageSource.gallery, imageQuality: 50);
     if (_pickedFile != null) {
       setState(() {
-        _foto = File(_pickedFile.path);
+        _foto = File(_pickedFile!.path);
       });
+      String res = await DokumenService().asyncFileUpload(
+          widget.dokumen.idDokumen.toString(), _foto, path, field);
+      (res.toUpperCase().contains("DATA BERHASIL DI UPLOAD"))
+          ? AwesomeDialog(
+              context: context,
+              dialogType: DialogType.success,
+              animType: AnimType.rightSlide,
+              title: 'Selamat..',
+              desc: "Data berhasil di update.. Terimakasih.",
+              btnOkOnPress: () async {
+                setState(() {});
+                Navigator.pop(context);
+              },
+            ).show()
+          : AwesomeDialog(
+              context: context,
+              dialogType: DialogType.error,
+              animType: AnimType.rightSlide,
+              title: 'Maaf..!',
+              desc: "Data gagal di upload, Silahkan ulangi lagi ya...",
+              btnOkOnPress: () async {
+                setState(() {});
+                Navigator.pop(context);
+              },
+            ).show();
     }
   }
 
-  @override
-  Future<bool> _uploadFoto(int id_dokumen, File foto) async {
-    final bytes = foto.readAsBytesSync();
-    final data = {
-      "id_dokumen": base64Encode(bytes),
-      "foto": foto,
-    };
-    final url = "http://e-blendrang.id/api/updateFoto";
-    final response = await http.put(
-      Uri.parse(url),
-      body: jsonEncode(data),
-    );
-    final message = jsonDecode(response.body);
-    if (message == 1) {
-      return true;
-    } else {
-      return false;
-    }
+  Future<AwesomeDialog> filtered1(
+      BuildContext context, String jenisFile) async {
+    int fIndex = 0;
+    return AwesomeDialog(
+      context: context,
+      animType: AnimType.scale,
+      dialogType: DialogType.question,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 10),
+          const Text("Pilih Actions...",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black)),
+          const SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              (jenisFile.toUpperCase().contains("SPK"))
+                  ? _chooseImageFromCamera("updateSpk", "file_spk", "GALERY")
+                  : _chooseImageFromCamera("updateBast", "file_bast", "GALERY");
+              ;
+            },
+            child: Container(
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Color(0xff263238), width: 1),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Center(
+                    child: Text("UPLOAD DATA",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black)),
+                  ),
+                )),
+          ),
+          const SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              (jenisFile.toUpperCase().contains("SPK"))
+                  ? _chooseImageFromCamera("updateSpk", "file_spk", "CAMERA")
+                  : _chooseImageFromCamera("updateBast", "file_bast", "GALERY");
+              ;
+            },
+            child: Container(
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Color(0xff263238), width: 1),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Center(
+                    child: Text("AMBIL DATA MANUAL",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black)),
+                  ),
+                )),
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
+      title: 'Filter',
+      desc: 'Kategori :',
+      // btnCancelOnPress: () {
+      //   Navigator.pop(context);
+      // },
+    )..show();
   }
 
   @override
@@ -375,7 +464,7 @@ class _DetailPage extends State<DetailPage> {
             Expanded(
                 child: TextButton(
               onPressed: () {
-                filtered1(context);
+                filtered1(context, "SPK");
               },
               child: Text(
                 "File SPK",
@@ -398,7 +487,9 @@ class _DetailPage extends State<DetailPage> {
             ),
             Expanded(
                 child: TextButton(
-              onPressed: _chooseImageFromCamera,
+              onPressed: () {
+                _chooseImageFromCamera("updateFoto", "foto", "CAMERA");
+              },
               child: Text(
                 "Foto",
                 style: secondTextStyle.copyWith(
@@ -421,7 +512,7 @@ class _DetailPage extends State<DetailPage> {
             Expanded(
                 child: TextButton(
               onPressed: () {
-                filtered1(context);
+                filtered1(context, "BAST");
               },
               child: Text(
                 "File BAST",
@@ -563,76 +654,4 @@ class _DetailPage extends State<DetailPage> {
       body: content(),
     );
   }
-}
-
-Future<AwesomeDialog> filtered1(
-  BuildContext context,
-) async {
-  int fIndex = 0;
-  return AwesomeDialog(
-    context: context,
-    animType: AnimType.scale,
-    dialogType: DialogType.question,
-    body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(height: 10),
-        const Text("Pilih Actions...",
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.black)),
-        const SizedBox(height: 10),
-        InkWell(
-          onTap: () {},
-          child: Container(
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Color(0xff263238), width: 1),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Center(
-                  child: Text("UPLOAD DATA",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black)),
-                ),
-              )),
-        ),
-        const SizedBox(height: 10),
-        InkWell(
-          onTap: () {},
-          child: Container(
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Color(0xff263238), width: 1),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Center(
-                  child: Text("AMBIL DATA MANUAL",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black)),
-                ),
-              )),
-        ),
-        const SizedBox(height: 10),
-      ],
-    ),
-    title: 'Filter',
-    desc: 'Kategori :',
-    // btnCancelOnPress: () {
-    //   Navigator.pop(context);
-    // },
-  )..show();
 }
