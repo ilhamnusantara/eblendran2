@@ -32,6 +32,7 @@ class _DokumenPageState extends State<DokumenPage> {
   // final List<DokumenModel> dokumens;
   final List<String> title = ['Blm Foto', 'Blm Bast', 'Blm SPK'];
   late int selectedIndex = widget.index;
+  String? searching;
   // List<DokumenModel> allDokumens = [];
   // List<DokumenModel> filteredDokumens = [];
   Future<void> _getData() async {
@@ -59,20 +60,17 @@ class _DokumenPageState extends State<DokumenPage> {
   }
 
   void _runFilter(String text) {
-    // filteredDokumens.clear();
-    // if (text.isEmpty) {
-    //   setState(() {});
-    //   return;
-    // }
-    // allDokumens.forEach((data) {
-    //   if (data.keterangan_belanja
-    //       .toString()
-    //       .toLowerCase()
-    //       .contains(text.toLowerCase().toString())) {
-    //     filteredDokumens.add(data);
-    //   }
-    // });
-    // setState(() {});
+    if (text.isEmpty) {
+      setState(() {
+        selectedIndex = 0;
+      });
+      return;
+    } else {
+      setState(() {
+        searching = text.toUpperCase();
+        selectedIndex = 4;
+      });
+    }
   }
 
   @override
@@ -189,6 +187,127 @@ class _DokumenPageState extends State<DokumenPage> {
           ),
         ),
       );
+    }
+
+    Widget item5() {
+      return Container(
+          margin: EdgeInsets.only(
+            top: 10,
+            left: marginLogin,
+            right: marginLogin,
+          ),
+          child:
+              BlocBuilder<DokumenBloc, DokumenState>(builder: (context, state) {
+            if (state is DokumenLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is DokumenLoadedState) {
+              List<Dokumen> dokumen = state.dokumenList
+                  .where((element) => element.keteranganBelanja
+                      .toString()
+                      .toUpperCase()
+                      .contains(searching!))
+                  .toList();
+              if (dokumen.isNotEmpty) {
+                return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: dokumen.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      int i = 0;
+                      debugPrint("i ke => ${i.toString()}");
+                      i++;
+                      return GestureDetector(
+                        onTap: () {
+                          // Navigator.of(context).pushNamed('/detailDokumen',
+                          //     arguments: jsonEncode(dokumen[index]));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailPage(
+                                        dokumen: dokumen[index],
+                                        namaInstansi:
+                                            dokumen[index].namaInstansi,
+                                      )));
+                        },
+                        child: Card(
+                          elevation: 12,
+                          color: backgroundColor13,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Container(
+                                width: 40,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  image: const DecorationImage(
+                                    image: AssetImage(
+                                      'assets/icon_goverment.png',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${dokumen[index].keteranganBelanja}',
+                                      style: primaryTextStyle.copyWith(
+                                        fontWeight: semiBold,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${dokumen[index].namaInstansi}',
+                                      style: subtitleTextStyle.copyWith(
+                                        fontWeight: light,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 23,
+                                height: 23,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/icon_information.png'),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+              } else {
+                return Center(
+                  child: Text(
+                    "No Data",
+                    style: subtitleTextStyle.copyWith(
+                      fontWeight: light,
+                    ),
+                  ),
+                );
+              }
+            } else {
+              return const Center(
+                child: Text("ERROR"),
+              );
+            }
+          }));
     }
 
     Widget item1() {
@@ -684,7 +803,9 @@ class _DokumenPageState extends State<DokumenPage> {
                 ? item2()
                 : (selectedIndex == 2)
                     ? item3()
-                    : item4(),
+                    : (selectedIndex == 3)
+                        ? item4()
+                        : item5(),
       ],
     );
   }
