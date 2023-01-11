@@ -47,9 +47,8 @@ class _DetailPage extends State<DetailPage> {
 
   Future<void> _chooseImageFromCamera(
       String path, String field, String dir) async {
-    final _pickedFile = (dir.toUpperCase().contains("CAMERA"))
-        ? await _picker.getImage(source: ImageSource.camera, imageQuality: 50)
-        : await _picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+    final _pickedFile =
+        await _picker.getImage(source: ImageSource.camera, imageQuality: 50);
     if (_pickedFile != null) {
       setState(() {
         _foto = File(_pickedFile!.path);
