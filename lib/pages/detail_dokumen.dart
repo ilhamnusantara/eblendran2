@@ -81,8 +81,8 @@ class _DetailPage extends State<DetailPage> {
     }
   }
 
-  Future<AwesomeDialog> filtered1(
-      BuildContext context, String jenisFile) async {
+  Future<AwesomeDialog> filtered1(BuildContext context, String jenisFile,
+      {String? title}) async {
     int fIndex = 0;
     return AwesomeDialog(
       context: context,
@@ -111,6 +111,9 @@ class _DetailPage extends State<DetailPage> {
                                 : widget.namaInstansi,
                             field: "file_spk",
                             path: "updateSpk",
+                            title: (title == null)
+                                ? "Please Add a file $jenisFile"
+                                : title,
                           )))
                   : Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => Pdf(
@@ -122,6 +125,9 @@ class _DetailPage extends State<DetailPage> {
                                 : widget.namaInstansi,
                             field: "file_bast",
                             path: "updateBast",
+                            title: (title == null)
+                                ? "Please Add a file $jenisFile"
+                                : title,
                           )));
             },
             child: Container(
@@ -157,6 +163,9 @@ class _DetailPage extends State<DetailPage> {
                                 : widget.namaInstansi,
                             field: "file_spk",
                             path: "updateSpk",
+                            title: (title == null)
+                                ? "Please Add a file $jenisFile"
+                                : title,
                           )))
                   : Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => Pdf(
@@ -168,6 +177,9 @@ class _DetailPage extends State<DetailPage> {
                                 : widget.namaInstansi,
                             field: "file_bast",
                             path: "updateBast",
+                            title: (title == null)
+                                ? "Please Add a file $jenisFile"
+                                : title,
                           )));
             },
             child: Container(
@@ -507,7 +519,7 @@ class _DetailPage extends State<DetailPage> {
                       filtered1(context, "SPK");
                     },
                     child: Text(
-                      "File SPK",
+                      "New SPK",
                       style: secondTextStyle.copyWith(
                         fontSize: 16,
                         fontWeight: medium,
@@ -524,12 +536,16 @@ class _DetailPage extends State<DetailPage> {
                   ))
                 : Expanded(
                     child: TextButton(
-                    onPressed: null,
-                    child: Text(
-                      "File SPK",
-                      style: secondTextStyle.copyWith(
-                        fontSize: 16,
-                        fontWeight: medium,
+                    onPressed: () {
+                      filtered1(context, "SPK", title: "Update File SPK");
+                    },
+                    child: Center(
+                      child: Text(
+                        "Update SPK",
+                        style: secondTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: light,
+                        ),
                       ),
                     ),
                     style: TextButton.styleFrom(
@@ -575,7 +591,7 @@ class _DetailPage extends State<DetailPage> {
                       filtered1(context, "BAST");
                     },
                     child: Text(
-                      "BAST",
+                      "new BAST",
                       style: secondTextStyle.copyWith(
                         fontSize: 16,
                         fontWeight: medium,
@@ -592,12 +608,16 @@ class _DetailPage extends State<DetailPage> {
                   ))
                 : Expanded(
                     child: TextButton(
-                    onPressed: null,
-                    child: Text(
-                      "BAST",
-                      style: secondTextStyle.copyWith(
-                        fontSize: 16,
-                        fontWeight: medium,
+                    onPressed: () {
+                      filtered1(context, "SPK", title: "Update File BAST");
+                    },
+                    child: Center(
+                      child: Text(
+                        "Update BAST",
+                        style: secondTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: light,
+                        ),
                       ),
                     ),
                     style: TextButton.styleFrom(
@@ -626,7 +646,7 @@ class _DetailPage extends State<DetailPage> {
             Container(
               width: 500,
               height: 100,
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 20,
               ),
               child: Column(
@@ -659,7 +679,7 @@ class _DetailPage extends State<DetailPage> {
       appBar: AppBar(
         backgroundColor: backgroundColor2,
         leading: IconButton(
-          icon: Icon(Icons.close),
+          icon: const Icon(Icons.close),
           color: Colors.white,
           onPressed: () {
             Navigator.pop(context);

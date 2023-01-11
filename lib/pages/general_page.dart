@@ -55,14 +55,14 @@ class GeneralPage extends StatelessWidget {
                                     child: Container(
                                       width: 24,
                                       height: 24,
-                                      margin: EdgeInsets.only(right: 26),
-                                      decoration: BoxDecoration(
+                                      margin: const EdgeInsets.only(right: 26),
+                                      decoration: const BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage(
                                                   'assets/backArrow.png'))),
                                     ),
                                   )
-                                : SizedBox(),
+                                : const SizedBox(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,

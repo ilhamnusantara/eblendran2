@@ -15,14 +15,15 @@ import '../services/dokumen_service.dart';
 class Pdf extends StatefulWidget {
   final Dokumen dokumen;
   String? namaInstansi;
-  String source, tipeData, path, field;
+  String source, tipeData, path, field, title;
   Pdf(
       {required this.dokumen,
       required this.source,
       this.namaInstansi,
       required this.tipeData,
       required this.path,
-      required this.field});
+      required this.field,
+      required this.title});
   @override
   State<StatefulWidget> createState() {
     return _Pdf();
@@ -37,7 +38,7 @@ class _Pdf extends State<Pdf> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Please Add a file"),
+        title: Text(widget.title),
         actions: [
           (_image.isNotEmpty)
               ? IconButton(
