@@ -5,6 +5,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:eblendrang2/blocs/blocs_exports.dart';
 import 'package:eblendrang2/models/dokumen_model.dart';
 import 'package:eblendrang2/pages/home/main_page.dart';
+import 'package:eblendrang2/pages/pdf.dart';
 import 'package:eblendrang2/services/dokumen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:eblendrang2/themes.dart';
@@ -33,6 +34,7 @@ class _DetailPage extends State<DetailPage> {
   late File _foto;
   late PickedFile _pickedFile;
   final _picker = ImagePicker();
+  String? navigator, tipeData;
 
   @override
   void initState() {
@@ -100,9 +102,32 @@ class _DetailPage extends State<DetailPage> {
           InkWell(
             onTap: () {
               (jenisFile.toUpperCase().contains("SPK"))
-                  ? _chooseImageFromCamera("updateSpk", "file_spk", "GALERY")
-                  : _chooseImageFromCamera("updateBast", "file_bast", "GALERY");
-              ;
+                  ? Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => Pdf(
+                                dokumen: widget.dokumen,
+                                source: "GALERY",
+                                tipeData: jenisFile,
+                                namaInstansi: (widget.namaInstansi == null)
+                                    ? widget.dokumen.namaInstansi
+                                    : widget.namaInstansi,
+                                field: "file_spk",
+                                path: "updateSpk",
+                              )),
+                      (route) => false)
+                  : Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => Pdf(
+                                dokumen: widget.dokumen,
+                                source: "GALERY",
+                                tipeData: jenisFile,
+                                namaInstansi: (widget.namaInstansi == null)
+                                    ? widget.dokumen.namaInstansi
+                                    : widget.namaInstansi,
+                                field: "file_bast",
+                                path: "updateBast",
+                              )),
+                      (route) => false);
             },
             child: Container(
                 height: 60,
@@ -127,9 +152,32 @@ class _DetailPage extends State<DetailPage> {
           InkWell(
             onTap: () {
               (jenisFile.toUpperCase().contains("SPK"))
-                  ? _chooseImageFromCamera("updateSpk", "file_spk", "CAMERA")
-                  : _chooseImageFromCamera("updateBast", "file_bast", "GALERY");
-              ;
+                  ? Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => Pdf(
+                                dokumen: widget.dokumen,
+                                source: "CAMERA",
+                                tipeData: jenisFile,
+                                namaInstansi: (widget.namaInstansi == null)
+                                    ? widget.dokumen.namaInstansi
+                                    : widget.namaInstansi,
+                                field: "file_spk",
+                                path: "updateSpk",
+                              )),
+                      (route) => false)
+                  : Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => Pdf(
+                                dokumen: widget.dokumen,
+                                source: "CAMERA",
+                                tipeData: jenisFile,
+                                namaInstansi: (widget.namaInstansi == null)
+                                    ? widget.dokumen.namaInstansi
+                                    : widget.namaInstansi,
+                                field: "file_bast",
+                                path: "updateBast",
+                              )),
+                      (route) => false);
             },
             child: Container(
                 height: 60,
@@ -461,28 +509,48 @@ class _DetailPage extends State<DetailPage> {
         ),
         child: Row(
           children: [
-            Expanded(
-                child: TextButton(
-              onPressed: () {
-                filtered1(context, "SPK");
-              },
-              child: Text(
-                "File SPK",
-                style: secondTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: medium,
-                ),
-              ),
-              style: TextButton.styleFrom(
-                backgroundColor: backgroundColor12,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              // color: Colors.black,
-              // textColor: Colors.white,
-            )),
-            SizedBox(
+            (widget.dokumen.fileSpk.toUpperCase().contains("NOT DETECT"))
+                ? Expanded(
+                    child: TextButton(
+                    onPressed: () {
+                      filtered1(context, "SPK");
+                    },
+                    child: Text(
+                      "File SPK",
+                      style: secondTextStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: medium,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: backgroundColor12,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    // color: Colors.black,
+                    // textColor: Colors.white,
+                  ))
+                : Expanded(
+                    child: TextButton(
+                    onPressed: null,
+                    child: Text(
+                      "File SPK",
+                      style: secondTextStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: medium,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.brown[100],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    // color: Colors.black,
+                    // textColor: Colors.white,
+                  )),
+            const SizedBox(
               width: 8,
             ),
             Expanded(
@@ -506,30 +574,50 @@ class _DetailPage extends State<DetailPage> {
               // color: Colors.black,
               // textColor: Colors.white,
             )),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
-            Expanded(
-                child: TextButton(
-              onPressed: () {
-                filtered1(context, "BAST");
-              },
-              child: Text(
-                "File BAST",
-                style: secondTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: medium,
-                ),
-              ),
-              style: TextButton.styleFrom(
-                backgroundColor: backgroundColor12,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              // color: Colors.black,
-              // textColor: Colors.white,
-            )),
+            (widget.dokumen.fileBast.toUpperCase().contains("NOT DETECT"))
+                ? Expanded(
+                    child: TextButton(
+                    onPressed: () {
+                      filtered1(context, "BAST");
+                    },
+                    child: Text(
+                      "BAST",
+                      style: secondTextStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: medium,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: backgroundColor12,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    // color: Colors.black,
+                    // textColor: Colors.white,
+                  ))
+                : Expanded(
+                    child: TextButton(
+                    onPressed: null,
+                    child: Text(
+                      "BAST",
+                      style: secondTextStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: medium,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.brown[100],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    // color: Colors.black,
+                    // textColor: Colors.white,
+                  )),
           ],
         ),
       );

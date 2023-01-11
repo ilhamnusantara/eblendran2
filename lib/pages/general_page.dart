@@ -4,6 +4,7 @@ class GeneralPage extends StatelessWidget {
   final String title;
   final String subtitle;
   final Function? onBackButtonPressed;
+  final Function? floatingActionButton;
   final Widget? child;
   final Color? backColor;
 
@@ -12,80 +13,89 @@ class GeneralPage extends StatelessWidget {
       this.subtitle = "subtitle",
       this.onBackButtonPressed,
       this.child,
-      this.backColor});
+      this.backColor,
+      this.floatingActionButton});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: (floatingActionButton != null)
+            ? FloatingActionButton(onPressed: () {
+                if (floatingActionButton != null) {
+                  floatingActionButton!();
+                }
+              })
+            : null,
         body: Stack(
-      children: [
-        Container(color: Colors.white),
-        SafeArea(
-            child: Container(
-          color: backColor ?? Colors.white,
-        )),
-        SafeArea(
-          child: ListView(
-            children: [
-              Column(
+          children: [
+            Container(color: Colors.white),
+            SafeArea(
+                child: Container(
+              color: backColor ?? Colors.white,
+            )),
+            SafeArea(
+              child: ListView(
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 26),
-                    width: double.infinity,
-                    height: 100,
-                    color: Colors.white,
-                    child: Row(
-                      children: [
-                        onBackButtonPressed != null
-                            ? GestureDetector(
-                                onTap: () {
-                                  if (onBackButtonPressed != null) {
-                                    onBackButtonPressed!();
-                                  }
-                                },
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  margin: EdgeInsets.only(right: 26),
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/backArrow.png'))),
-                                ),
-                              )
-                            : SizedBox(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 26),
+                        width: double.infinity,
+                        height: 100,
+                        color: Colors.white,
+                        child: Row(
                           children: [
-                            Text(
-                              title,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 22, fontWeight: FontWeight.w500),
-                            ),
-                            Text(
-                              subtitle,
-                              style: GoogleFonts.poppins(
-                                  color: "8D92A3".toColor(),
-                                  fontWeight: FontWeight.w300),
+                            onBackButtonPressed != null
+                                ? GestureDetector(
+                                    onTap: () {
+                                      if (onBackButtonPressed != null) {
+                                        onBackButtonPressed!();
+                                      }
+                                    },
+                                    child: Container(
+                                      width: 24,
+                                      height: 24,
+                                      margin: EdgeInsets.only(right: 26),
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/backArrow.png'))),
+                                    ),
+                                  )
+                                : SizedBox(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  title,
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  subtitle,
+                                  style: GoogleFonts.poppins(
+                                      color: "8D92A3".toColor(),
+                                      fontWeight: FontWeight.w300),
+                                )
+                              ],
                             )
                           ],
-                        )
-                      ],
-                    ),
+                        ),
+                      ),
+                      Container(
+                        height: 26,
+                        width: double.infinity,
+                        color: "FAFAFC".toColor(),
+                      ),
+                      child ?? SizedBox()
+                    ],
                   ),
-                  Container(
-                    height: 26,
-                    width: double.infinity,
-                    color: "FAFAFC".toColor(),
-                  ),
-                  child ?? SizedBox()
                 ],
               ),
-            ],
-          ),
-        ),
-      ],
-    ));
+            ),
+          ],
+        ));
   }
 }

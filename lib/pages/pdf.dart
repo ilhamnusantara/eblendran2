@@ -1,6 +1,7 @@
 import 'dart:io';
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:eblendrang2/pages/detail_dokumen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pdf/pdf.dart';
@@ -8,7 +9,20 @@ import 'package:pdf/widgets.dart' as pw;
 // import 'package:ext_storage/ext_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../models/models.dart';
+import '../services/dokumen_service.dart';
+
 class Pdf extends StatefulWidget {
+  final Dokumen dokumen;
+  String? namaInstansi;
+  String source, tipeData, path, field;
+  Pdf(
+      {required this.dokumen,
+      required this.source,
+      this.namaInstansi,
+      required this.tipeData,
+      required this.path,
+      required this.field});
   @override
   State<StatefulWidget> createState() {
     return _Pdf();
@@ -23,38 +37,48 @@ class _Pdf extends State<Pdf> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("image to pdf"),
+        title: const Text("Please Add a file"),
         actions: [
-          IconButton(
-              icon: Icon(Icons.picture_as_pdf),
-              onPressed: () {
-                createPDF();
-                savePDF();
-              })
+          (_image.isNotEmpty)
+              ? IconButton(
+                  icon: const Icon(Icons.upload_file),
+                  onPressed: () {
+                    createPDF();
+                    savePDF();
+                  })
+              : const SizedBox()
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: getImageFromGallery,
+        onPressed: () {
+          getImageFromGallery(widget.source);
+        },
       ),
-      body: _image != null
+      body: _image.isNotEmpty
           ? ListView.builder(
               itemCount: _image.length,
               itemBuilder: (context, index) => Container(
                   height: 400,
                   width: double.infinity,
-                  margin: EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(8),
                   child: Image.file(
                     _image[index],
                     fit: BoxFit.cover,
                   )),
             )
-          : Container(),
+          : const SizedBox(
+              child: Center(
+                child: Text("No File Selected ..."),
+              ),
+            ),
     );
   }
 
-  getImageFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+  Future<dynamic> getImageFromGallery(String source) async {
+    final pickedFile = (source.toUpperCase().contains("CAMERA"))
+        ? await picker.getImage(source: ImageSource.camera, imageQuality: 50)
+        : await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
     setState(() {
       if (pickedFile != null) {
         _image.add(File(pickedFile.path));
@@ -82,7 +106,7 @@ class _Pdf extends State<Pdf> {
     return docsPath;
   }
 
-  savePDF() async {
+  Future<dynamic> savePDF() async {
     try {
       // final dir = await ExtStorage.getExternalStoragePublicDirectory(
       //     ExtStorage.DIRECTORY_DOWNLOADS);
@@ -92,8 +116,44 @@ class _Pdf extends State<Pdf> {
       // final file = File('${dir}/filename${DateTime.now()}.pdf');
       // final file = File('${dir.path}/filename${DateTime.now()}.pdf');
       final file = File('${dir}/filename${DateTime.now()}.pdf');
-      await file.writeAsBytes(await pdf.save());
-      showPrintedMessage('success', 'saved to documents');
+      var file1 = await file.writeAsBytes(await pdf.save());
+      File fileUpload = File(file1.path);
+      String res = await DokumenService().asyncFileUpload(
+          widget.dokumen.idDokumen.toString(),
+          fileUpload,
+          widget.path,
+          widget.field);
+      (res.toUpperCase().contains("DATA BERHASIL DI UPLOAD"))
+          ? AwesomeDialog(
+              context: context,
+              dialogType: DialogType.success,
+              animType: AnimType.rightSlide,
+              title: 'Selamat..',
+              desc: "Data berhasil di update.. Terimakasih.",
+              btnOkOnPress: () async {
+                setState(() {});
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DetailPage(dokumen: widget.dokumen)),
+                    (route) => false);
+              },
+            ).show()
+          : AwesomeDialog(
+              context: context,
+              dialogType: DialogType.error,
+              animType: AnimType.rightSlide,
+              title: 'Maaf..!',
+              desc: "Data gagal di upload, Silahkan ulangi lagi ya...",
+              btnOkOnPress: () async {
+                setState(() {});
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DetailPage(dokumen: widget.dokumen)),
+                    (route) => false);
+              },
+            ).show();
     } catch (e) {
       showPrintedMessage('error', e.toString());
     }
