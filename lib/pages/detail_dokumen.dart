@@ -101,32 +101,28 @@ class _DetailPage extends State<DetailPage> {
           InkWell(
             onTap: () {
               (jenisFile.toUpperCase().contains("SPK"))
-                  ? Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => Pdf(
-                                dokumen: widget.dokumen,
-                                source: "GALERY",
-                                tipeData: jenisFile,
-                                namaInstansi: (widget.namaInstansi == null)
-                                    ? widget.dokumen.namaInstansi
-                                    : widget.namaInstansi,
-                                field: "file_spk",
-                                path: "updateSpk",
-                              )),
-                      (route) => false)
-                  : Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => Pdf(
-                                dokumen: widget.dokumen,
-                                source: "GALERY",
-                                tipeData: jenisFile,
-                                namaInstansi: (widget.namaInstansi == null)
-                                    ? widget.dokumen.namaInstansi
-                                    : widget.namaInstansi,
-                                field: "file_bast",
-                                path: "updateBast",
-                              )),
-                      (route) => false);
+                  ? Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Pdf(
+                            dokumen: widget.dokumen,
+                            source: "GALERY",
+                            tipeData: jenisFile,
+                            namaInstansi: (widget.namaInstansi == null)
+                                ? widget.dokumen.namaInstansi
+                                : widget.namaInstansi,
+                            field: "file_spk",
+                            path: "updateSpk",
+                          )))
+                  : Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Pdf(
+                            dokumen: widget.dokumen,
+                            source: "GALERY",
+                            tipeData: jenisFile,
+                            namaInstansi: (widget.namaInstansi == null)
+                                ? widget.dokumen.namaInstansi
+                                : widget.namaInstansi,
+                            field: "file_bast",
+                            path: "updateBast",
+                          )));
             },
             child: Container(
                 height: 60,
@@ -151,32 +147,28 @@ class _DetailPage extends State<DetailPage> {
           InkWell(
             onTap: () {
               (jenisFile.toUpperCase().contains("SPK"))
-                  ? Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => Pdf(
-                                dokumen: widget.dokumen,
-                                source: "CAMERA",
-                                tipeData: jenisFile,
-                                namaInstansi: (widget.namaInstansi == null)
-                                    ? widget.dokumen.namaInstansi
-                                    : widget.namaInstansi,
-                                field: "file_spk",
-                                path: "updateSpk",
-                              )),
-                      (route) => false)
-                  : Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => Pdf(
-                                dokumen: widget.dokumen,
-                                source: "CAMERA",
-                                tipeData: jenisFile,
-                                namaInstansi: (widget.namaInstansi == null)
-                                    ? widget.dokumen.namaInstansi
-                                    : widget.namaInstansi,
-                                field: "file_bast",
-                                path: "updateBast",
-                              )),
-                      (route) => false);
+                  ? Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Pdf(
+                            dokumen: widget.dokumen,
+                            source: "CAMERA",
+                            tipeData: jenisFile,
+                            namaInstansi: (widget.namaInstansi == null)
+                                ? widget.dokumen.namaInstansi
+                                : widget.namaInstansi,
+                            field: "file_spk",
+                            path: "updateSpk",
+                          )))
+                  : Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Pdf(
+                            dokumen: widget.dokumen,
+                            source: "CAMERA",
+                            tipeData: jenisFile,
+                            namaInstansi: (widget.namaInstansi == null)
+                                ? widget.dokumen.namaInstansi
+                                : widget.namaInstansi,
+                            field: "file_bast",
+                            path: "updateBast",
+                          )));
             },
             child: Container(
                 height: 60,
