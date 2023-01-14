@@ -50,13 +50,17 @@ class AuthService {
       'password': password,
     });
 
+    // var url2 = '$baseUrl/set-tahun';
+    // var body2 = jsonEncode({'tahun': 2022});
+    // var response2 =
+    //     await http.post(Uri.parse(url2), headers: header, body: body2);
     var response = await http.post(
       Uri.parse(url),
       headers: header,
       body: body,
     );
-
-    print(response.statusCode);
+    // debugPrint("response 2 => ${response2.statusCode}");
+    print("auth => ${response.statusCode}");
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['data'];

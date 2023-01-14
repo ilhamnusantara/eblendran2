@@ -2,6 +2,7 @@ import 'package:eblendrang2/pages/home/dokumen_page.dart';
 import 'package:eblendrang2/pages/home/home_page.dart';
 import 'package:eblendrang2/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class MainPage extends StatefulWidget {
   final int cIndex, fIndex;
@@ -98,4 +99,36 @@ class _MainPageState extends State<MainPage> {
       body: body(),
     );
   }
+}
+
+Future<AwesomeDialog> filtered(
+  BuildContext context,
+) async {
+  int fIndex = 0;
+  return AwesomeDialog(
+    context: context,
+    animType: AnimType.scale,
+    dialogType: DialogType.question,
+    body: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(height: 10),
+        const Text("Filter File",
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.black)),
+        const SizedBox(height: 10),
+        const SizedBox(height: 10),
+      ],
+    ),
+    title: 'Filter',
+    desc: 'Kategori :',
+    btnCancelOnPress: () {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MainPage(cIndex: 1, fIndex: 0)));
+    },
+  )..show();
 }

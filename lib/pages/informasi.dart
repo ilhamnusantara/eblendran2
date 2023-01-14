@@ -5,6 +5,11 @@ class Informasi extends StatefulWidget {
 }
 
 class _InstansiState extends State<Informasi> {
+  final List<String> items = [
+    '2023',
+    '2022',
+  ];
+  String? selectedValue;
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -275,7 +280,7 @@ class _InstansiState extends State<Informasi> {
       return SingleChildScrollView(
         child: Stack(
           children: <Widget>[
-            new Container(
+            Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(
                 horizontal: marginLogin,
@@ -283,9 +288,68 @@ class _InstansiState extends State<Informasi> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                      hint: Text(
+                        'Tahun Dokumen',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
+                      items: items
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                      value: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value as String;
+                        });
+                      },
+                      buttonHeight: 40,
+                      buttonWidth: 140,
+                      itemHeight: 40,
+                    ),
+                  ),
                   informasi(),
                   homePage(),
                   dokumenPage(),
+                  TextButton(
+                    onPressed: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString("session", selectedValue!);
+                      context.read<DokumenBloc>().add(LoadDokumen());
+                      context.read<InstansiBloc>().add(LoadInstansi());
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MainPage(cIndex: 0, fIndex: 0)),
+                          (route) => false);
+                    },
+                    // (){Navigator.pushNamed(context, '/home');},
+                    style: TextButton.styleFrom(
+                      backgroundColor: backgroundColor12,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      'Get Dokumen',
+                      style: primaryTextStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: medium,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
