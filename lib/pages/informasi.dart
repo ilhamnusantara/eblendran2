@@ -26,7 +26,7 @@ class _InstansiState extends State<Informasi> {
     Widget informasi() {
       return Container(
         margin: const EdgeInsets.only(
-          top: 40,
+          top: 10,
           left: 8,
           right: 8,
         ),
@@ -166,11 +166,7 @@ class _InstansiState extends State<Informasi> {
 
     Widget dokumenPage() {
       return Container(
-        margin: const EdgeInsets.only(
-          top: 20,
-          left: 8,
-          right: 8,
-        ),
+        margin: const EdgeInsets.only(top: 20, left: 8, right: 8, bottom: 5),
         child: Card(
           elevation: 12,
           color: backgroundColor13,
@@ -288,14 +284,29 @@ class _InstansiState extends State<Informasi> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
                   DropdownButtonHideUnderline(
                     child: DropdownButton2(
-                      hint: Text(
-                        'Tahun Dokumen',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).hintColor,
-                        ),
+                      hint: Row(
+                        children: [
+                          const Icon(
+                            Icons.list,
+                            size: 16,
+                            color: Colors.yellow,
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            'Pilih Tahun',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Theme.of(context).hintColor,
+                            ),
+                          ),
+                        ],
                       ),
                       items: items
                           .map((item) => DropdownMenuItem<String>(
@@ -314,9 +325,37 @@ class _InstansiState extends State<Informasi> {
                           selectedValue = value as String;
                         });
                       },
-                      buttonHeight: 40,
-                      buttonWidth: 140,
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_outlined,
+                      ),
+                      iconSize: 14,
+                      iconEnabledColor: Colors.yellow,
+                      iconDisabledColor: Colors.grey,
+                      buttonHeight: 50,
+                      buttonWidth: 160,
+                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                      buttonDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: Colors.black26,
+                        ),
+                        color: Colors.redAccent,
+                      ),
+                      buttonElevation: 2,
                       itemHeight: 40,
+                      itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                      dropdownMaxHeight: 200,
+                      dropdownWidth: 200,
+                      dropdownPadding: null,
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.redAccent,
+                      ),
+                      dropdownElevation: 8,
+                      scrollbarRadius: const Radius.circular(40),
+                      scrollbarThickness: 6,
+                      scrollbarAlwaysShow: true,
+                      offset: const Offset(-20, 0),
                     ),
                   ),
                   informasi(),

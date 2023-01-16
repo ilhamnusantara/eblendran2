@@ -111,15 +111,15 @@ Future<AwesomeDialog> filtered(
     dialogType: DialogType.question,
     body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(height: 10),
-        const Text("Filter File",
+      children: const [
+        SizedBox(height: 10),
+        Text("Filter File",
             style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: Colors.black)),
-        const SizedBox(height: 10),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
+        SizedBox(height: 10),
       ],
     ),
     title: 'Filter',
