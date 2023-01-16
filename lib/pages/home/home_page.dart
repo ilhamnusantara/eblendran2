@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  '/edit-profile',
+                  '/addAll',
                 );
               },
               child: Container(
