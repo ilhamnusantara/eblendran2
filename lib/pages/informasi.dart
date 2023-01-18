@@ -5,11 +5,6 @@ class Informasi extends StatefulWidget {
 }
 
 class _InstansiState extends State<Informasi> {
-  final List<String> items = [
-    '2023',
-    '2022',
-  ];
-  String? selectedValue;
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -284,111 +279,9 @@ class _InstansiState extends State<Informasi> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                      hint: Row(
-                        children: [
-                          const Icon(
-                            Icons.list,
-                            size: 16,
-                            color: Colors.yellow,
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            'Pilih Tahun',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Theme.of(context).hintColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      items: items
-                          .map((item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(
-                                  item,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ))
-                          .toList(),
-                      value: selectedValue,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedValue = value as String;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.arrow_forward_ios_outlined,
-                      ),
-                      iconSize: 14,
-                      iconEnabledColor: Colors.yellow,
-                      iconDisabledColor: Colors.grey,
-                      buttonHeight: 50,
-                      buttonWidth: 160,
-                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-                      buttonDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: Colors.black26,
-                        ),
-                        color: Colors.redAccent,
-                      ),
-                      buttonElevation: 2,
-                      itemHeight: 40,
-                      itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                      dropdownMaxHeight: 200,
-                      dropdownWidth: 200,
-                      dropdownPadding: null,
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        color: Colors.redAccent,
-                      ),
-                      dropdownElevation: 8,
-                      scrollbarRadius: const Radius.circular(40),
-                      scrollbarThickness: 6,
-                      scrollbarAlwaysShow: true,
-                      offset: const Offset(-20, 0),
-                    ),
-                  ),
                   informasi(),
                   homePage(),
                   dokumenPage(),
-                  TextButton(
-                    onPressed: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setString("session", selectedValue!);
-                      context.read<DokumenBloc>().add(LoadDokumen());
-                      context.read<InstansiBloc>().add(LoadInstansi());
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  MainPage(cIndex: 0, fIndex: 0)),
-                          (route) => false);
-                    },
-                    // (){Navigator.pushNamed(context, '/home');},
-                    style: TextButton.styleFrom(
-                      backgroundColor: backgroundColor12,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Text(
-                      'Get Dokumen',
-                      style: primaryTextStyle.copyWith(
-                        fontSize: 16,
-                        fontWeight: medium,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
