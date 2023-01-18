@@ -9,11 +9,11 @@ class Instansi extends Equatable {
     required this.noTelp,
     required this.createdAt,
     required this.updatedAt,
-    required this.dokumen_count,
+    this.dokumen_count,
   });
 
   final int idInstansi;
-  final int dokumen_count;
+  int? dokumen_count;
   final String namaInstansi;
   final String alamat;
   final String noTelp;
@@ -30,7 +30,7 @@ class Instansi extends Equatable {
           required String noTelp,
           required dynamic createdAt,
           required dynamic updatedAt,
-          required int dokumen_count,
+          int? dokumen_count,
           List<Dokumen>? dokumenList}) =>
       Instansi(
         idInstansi: idInstansi ?? this.idInstansi,
@@ -50,10 +50,13 @@ class Instansi extends Equatable {
       noTelp: json["no_telp"],
       dokumen_count:
           (json['dokumen_count'] == null) ? 0 : json['dokumen_count'],
-      createdAt: json["created_at"],
-      updatedAt: json["updated_at"],
-      dokumenList:
-          List<Dokumen>.from(json["dokumen"].map((x) => Dokumen.fromJson(x))));
+      createdAt:
+          (json["created_at"] == null) ? DateTime.now() : json["created_at"],
+      updatedAt:
+          (json["updated_at"] == null) ? DateTime.now() : json["updated_at"],
+      dokumenList: (json["dokumen"] != null)
+          ? List<Dokumen>.from(json["dokumen"].map((x) => Dokumen.fromJson(x)))
+          : []);
 
   Map<String, dynamic> toJson() => {
         "id_instansi": idInstansi,

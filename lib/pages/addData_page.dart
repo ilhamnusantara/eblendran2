@@ -276,7 +276,7 @@ class _AddData extends State<AddData> {
                       'assets/icon_masterData.png',
                       width: 25,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     DropdownButton(
@@ -284,7 +284,7 @@ class _AddData extends State<AddData> {
                       borderRadius: BorderRadius.circular(20),
                       dropdownColor: Colors.blue,
                       value: _selectedCompany,
-                      hint: Text("Pilih data master"),
+                      hint: const Text("Pilih data master"),
                       items: _dropdownMenuItems,
                       onChanged: onChangeDropdownItem(_selectedCompany),
                     ),
@@ -1031,7 +1031,7 @@ class _AddData extends State<AddData> {
       return SingleChildScrollView(
         child: Stack(
           children: <Widget>[
-            new Container(
+            Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(
                 horizontal: marginLogin,
