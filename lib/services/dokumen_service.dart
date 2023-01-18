@@ -22,6 +22,13 @@ class DokumenService {
   //     print(e);
   //   }
   // }
+
+  // Future<String> addDokumen() {
+  //   var path =
+  //       "$baseUrl/dokumenUpdate?id_dokumen=${docs.idDokumen}&tgl_spk=${docs.tglSpk}&no_spk=${docs.noSpk}&no_bast=${docs.noBast}&tgl_bast=${docs.tglBast}";
+  //   var headers = {'Content-Type': 'application/json'};
+  // }
+
   Future<int> updateDokumen(Dokumen docs) async {
     var path =
         "$baseUrl/dokumenUpdate?id_dokumen=${docs.idDokumen}&tgl_spk=${docs.tglSpk}&no_spk=${docs.noSpk}&no_bast=${docs.noBast}&tgl_bast=${docs.tglBast}";

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:eblendrang2/models/instansi_model.dart';
 import 'package:eblendrang2/models/models.dart';
+import 'package:eblendrang2/pages/addData_page.dart';
 import 'package:eblendrang2/pages/page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:eblendrang2/pages/widgets/instansi_title.dart';
@@ -88,10 +89,8 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  '/addAll',
-                );
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => AddData()));
               },
               child: Container(
                 width: 54,
@@ -157,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                         return ListView.builder(
                           shrinkWrap: true,
                           itemCount: instansi.length,
-                          padding: new EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             top: 10,
                           ),
                           itemBuilder: (BuildContext context, index) {
@@ -170,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                                               instansi[index].namaInstansi,
                                         )));
                               },
-                              child: new Card(
+                              child: Card(
                                 elevation: 12,
                                 color: backgroundColor13,
                                 shape: RoundedRectangleBorder(

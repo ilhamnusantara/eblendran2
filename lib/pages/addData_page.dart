@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:eblendrang2/services/master_data.dart';
 import 'package:flutter/material.dart';
 import 'package:eblendrang2/themes.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class AddData extends StatefulWidget {
   @override
@@ -52,6 +54,7 @@ class _AddData extends State<AddData> {
   late Rekanan _selectedRekanan;
   @override
   void initState() {
+    namaInstansi.text = "Kelurahan Kalijaten";
     dateInput.text = "";
     dateInput2.text = "";
     dateInput3.text = ""; //set the Initial value of text field
@@ -105,25 +108,23 @@ class _AddData extends State<AddData> {
   TextEditingController dateInput = TextEditingController();
   TextEditingController dateInput2 = TextEditingController();
   TextEditingController dateInput3 = TextEditingController();
+  TextEditingController namaInstansi = TextEditingController();
+  TextEditingController keteranganT = TextEditingController();
+  TextEditingController noSpk = TextEditingController();
+  TextEditingController noBast = TextEditingController();
+  TextEditingController satuanT = TextEditingController();
+  TextEditingController volumeT = TextEditingController();
+  TextEditingController nomorPerUnit = TextEditingController();
+  TextEditingController noPpbT = TextEditingController();
+  TextEditingController datePpbT = TextEditingController();
+  String? masterDataT;
+  String? rekananT;
 
   List<String> company = [
     "Belanja Modal Almari",
     "Belanja Modal Pendingin",
     "Belanja Modal Komputer Personal"
   ];
-
-  late File _foto;
-  late PickedFile _pickedFile;
-  final _picker = ImagePicker();
-  Future<void> _chooseImageFromCamera() async {
-    _pickedFile = (await _picker.getImage(source: ImageSource.camera))!;
-    if (_pickedFile != null) {
-      setState(() {
-        _foto = File(_pickedFile.path);
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Future<void> showSuccessDialog() async {
@@ -239,6 +240,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller masterDataT
     Widget masterData() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -279,14 +281,77 @@ class _AddData extends State<AddData> {
                     const SizedBox(
                       width: 16,
                     ),
-                    DropdownButton(
-                      focusColor: Colors.blueGrey,
-                      borderRadius: BorderRadius.circular(20),
-                      dropdownColor: Colors.blue,
-                      value: _selectedCompany,
-                      hint: const Text("Pilih data master"),
-                      items: _dropdownMenuItems,
-                      onChanged: onChangeDropdownItem(_selectedCompany),
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        hint: Row(
+                          children: [
+                            const Icon(
+                              Icons.list,
+                              size: 16,
+                              color: Colors.blue,
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              'Pilih Master Data',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Theme.of(context).hintColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        items: company
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        value: masterDataT,
+                        onChanged: (value) {
+                          setState(() {
+                            masterDataT = value as String;
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.arrow_forward_ios_outlined,
+                        ),
+                        iconSize: 14,
+                        iconEnabledColor: Colors.blue,
+                        iconDisabledColor: Colors.grey,
+                        buttonHeight: 50,
+                        buttonWidth: 320,
+                        buttonPadding:
+                            const EdgeInsets.only(left: 14, right: 14),
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: Colors.black26,
+                          ),
+                          color: Colors.white,
+                        ),
+                        buttonElevation: 2,
+                        itemHeight: 40,
+                        itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                        dropdownMaxHeight: 200,
+                        dropdownWidth: 300,
+                        dropdownPadding: null,
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: Colors.white,
+                        ),
+                        dropdownElevation: 8,
+                        scrollbarRadius: const Radius.circular(40),
+                        scrollbarThickness: 6,
+                        scrollbarAlwaysShow: true,
+                        offset: const Offset(-20, 0),
+                      ),
                     ),
                     // Container(
                     //   child : DropdownSearch<String>(
@@ -311,6 +376,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller namaInstansi
     Widget nameInstansi() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -342,10 +408,10 @@ class _AddData extends State<AddData> {
                     Expanded(
                         child: TextFormField(
                       readOnly: true,
-                      style: primaryTextStyle,
+                      controller: namaInstansi,
                       decoration: InputDecoration(
-                        hintText: 'Kelurahan Kalijaten',
-                        hintStyle: inputStyle,
+                        hintText: namaInstansi.text,
+                        hintStyle: primaryTextStyle,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: grayChoose,
@@ -362,6 +428,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller keteranganT
     Widget keterangan() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -393,6 +460,7 @@ class _AddData extends State<AddData> {
                     Expanded(
                         child: TextFormField(
                       style: primaryTextStyle,
+                      controller: keteranganT,
                       decoration: InputDecoration(
                         hintText: 'Belanja Modal Vacum Cleaner',
                         hintStyle: inputStyle,
@@ -412,6 +480,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller noSpk
     Widget noSPK() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -442,6 +511,7 @@ class _AddData extends State<AddData> {
                     ),
                     Expanded(
                         child: TextFormField(
+                      controller: noSpk,
                       style: primaryTextStyle,
                       decoration: InputDecoration(
                         hintText: '027/4.3.2.1/PPKom.438.7.7.7/2022',
@@ -462,6 +532,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller dateInput
     Widget dateSPK() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -524,6 +595,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//keterangan noBast
     Widget noBAST() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -554,6 +626,7 @@ class _AddData extends State<AddData> {
                     ),
                     Expanded(
                         child: TextFormField(
+                      controller: noBast,
                       style: primaryTextStyle,
                       decoration: InputDecoration(
                         hintText: '027/4.3.2.4/PPKom.438.7.7.7/2022',
@@ -574,6 +647,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller dateInput2
     Widget dateBAST() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -636,6 +710,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller satuanT
     Widget satuan() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -667,6 +742,7 @@ class _AddData extends State<AddData> {
                     Expanded(
                         child: TextFormField(
                       style: primaryTextStyle,
+                      controller: satuanT,
                       decoration: InputDecoration(
                         hintText: 'Paket/Unit/Buah/Tahun',
                         hintStyle: inputStyle,
@@ -686,6 +762,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller volumeT
     Widget volume() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -717,6 +794,7 @@ class _AddData extends State<AddData> {
                     Expanded(
                         child: TextField(
                       style: primaryTextStyle,
+                      controller: volumeT,
                       decoration: InputDecoration(
                         hintText: '1 - 100',
                         hintStyle: inputStyle,
@@ -740,6 +818,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller nomorPerUnit
     Widget nomPerUnit() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -771,6 +850,7 @@ class _AddData extends State<AddData> {
                     Expanded(
                         child: TextFormField(
                       style: primaryTextStyle,
+                      controller: nomorPerUnit,
                       decoration: InputDecoration(
                         hintText: 'Rp.1.000.000,-',
                         hintStyle: inputStyle,
@@ -818,13 +898,55 @@ class _AddData extends State<AddData> {
                     SizedBox(
                       width: 16,
                     ),
-                    DropdownButton(
-                      focusColor: Colors.blueGrey,
-                      borderRadius: BorderRadius.circular(20),
-                      dropdownColor: Colors.blue,
-                      value: _selectedRekanan,
-                      items: _dropdownMenuItems2,
-                      onChanged: onChangeDropdownItem2(_selectedRekanan),
+                    DropdownButton2(
+                      hint: Text(
+                        'Pilih Data Rekanan',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
+                      items: Rekanan.getRekanans()
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item.nameRekanan,
+                                child: Text(
+                                  item.nameRekanan,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                      value: rekananT,
+                      onChanged: (value) {
+                        setState(() {
+                          rekananT = value as String;
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_outlined,
+                      ),
+                      iconSize: 14,
+                      iconEnabledColor: Colors.blue,
+                      iconDisabledColor: Colors.grey,
+                      buttonHeight: 50,
+                      buttonWidth: 320,
+                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                      buttonElevation: 2,
+                      itemHeight: 40,
+                      itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                      dropdownMaxHeight: 200,
+                      dropdownWidth: 300,
+                      dropdownPadding: null,
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.white,
+                      ),
+                      dropdownElevation: 8,
+                      scrollbarRadius: const Radius.circular(40),
+                      scrollbarThickness: 6,
+                      scrollbarAlwaysShow: true,
+                      offset: const Offset(-20, 0),
                     ),
                   ],
                 ),
@@ -835,6 +957,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller noPpbT
     Widget noPpb() {
       return Container(
         margin: EdgeInsets.only(top: 10),
@@ -866,6 +989,7 @@ class _AddData extends State<AddData> {
                     Expanded(
                         child: TextFormField(
                       style: primaryTextStyle,
+                      controller: noPpbT,
                       decoration: InputDecoration(
                         hintText: '601011107-PPB',
                         hintStyle: inputStyle,
@@ -885,6 +1009,7 @@ class _AddData extends State<AddData> {
       );
     }
 
+//controller dateInput3
     Widget dateppb() {
       return Container(
         margin: EdgeInsets.only(
@@ -949,83 +1074,83 @@ class _AddData extends State<AddData> {
       );
     }
 
-    Widget button() {
-      return Container(
-        margin: EdgeInsets.only(
-          top: 10,
-          bottom: 30,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-                child: TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/pdf');
-              },
-              child: Text(
-                "File SPK",
-                style: secondTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: medium,
-                ),
-              ),
-              style: TextButton.styleFrom(
-                backgroundColor: backgroundColor12,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              // color: Colors.black,
-              // textColor: Colors.white,
-            )),
-            SizedBox(
-              width: 8,
-            ),
-            Expanded(
-                child: TextButton(
-              onPressed: _chooseImageFromCamera,
-              child: Text(
-                "Foto",
-                style: secondTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: medium,
-                ),
-              ),
-              style: TextButton.styleFrom(
-                backgroundColor: backgroundColor12,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              // color: Colors.black,
-              // textColor: Colors.white,
-            )),
-            SizedBox(
-              width: 8,
-            ),
-            Expanded(
-                child: TextButton(
-              onPressed: () {},
-              child: Text(
-                "File BAST",
-                style: secondTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: medium,
-                ),
-              ),
-              style: TextButton.styleFrom(
-                backgroundColor: backgroundColor12,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              // color: Colors.black,
-              // textColor: Colors.white,
-            )),
-          ],
-        ),
-      );
-    }
+    // Widget button() {
+    //   return Container(
+    //     margin: EdgeInsets.only(
+    //       top: 10,
+    //       bottom: 30,
+    //     ),
+    //     child: Row(
+    //       children: [
+    //         Expanded(
+    //             child: TextButton(
+    //           onPressed: () {
+    //             Navigator.pushNamed(context, '/pdf');
+    //           },
+    //           child: Text(
+    //             "File SPK",
+    //             style: secondTextStyle.copyWith(
+    //               fontSize: 16,
+    //               fontWeight: medium,
+    //             ),
+    //           ),
+    //           style: TextButton.styleFrom(
+    //             backgroundColor: backgroundColor12,
+    //             shape: RoundedRectangleBorder(
+    //               borderRadius: BorderRadius.circular(12),
+    //             ),
+    //           ),
+    //           // color: Colors.black,
+    //           // textColor: Colors.white,
+    //         )),
+    //         SizedBox(
+    //           width: 8,
+    //         ),
+    //         Expanded(
+    //             child: TextButton(
+    //           onPressed: _chooseImageFromCamera,
+    //           child: Text(
+    //             "Foto",
+    //             style: secondTextStyle.copyWith(
+    //               fontSize: 16,
+    //               fontWeight: medium,
+    //             ),
+    //           ),
+    //           style: TextButton.styleFrom(
+    //             backgroundColor: backgroundColor12,
+    //             shape: RoundedRectangleBorder(
+    //               borderRadius: BorderRadius.circular(12),
+    //             ),
+    //           ),
+    //           // color: Colors.black,
+    //           // textColor: Colors.white,
+    //         )),
+    //         SizedBox(
+    //           width: 8,
+    //         ),
+    //         Expanded(
+    //             child: TextButton(
+    //           onPressed: () {},
+    //           child: Text(
+    //             "File BAST",
+    //             style: secondTextStyle.copyWith(
+    //               fontSize: 16,
+    //               fontWeight: medium,
+    //             ),
+    //           ),
+    //           style: TextButton.styleFrom(
+    //             backgroundColor: backgroundColor12,
+    //             shape: RoundedRectangleBorder(
+    //               borderRadius: BorderRadius.circular(12),
+    //             ),
+    //           ),
+    //           // color: Colors.black,
+    //           // textColor: Colors.white,
+    //         )),
+    //       ],
+    //     ),
+    //   );
+    // }
 
     Widget content() {
       return SingleChildScrollView(
