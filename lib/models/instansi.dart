@@ -7,8 +7,8 @@ class Instansi extends Equatable {
     required this.namaInstansi,
     required this.alamat,
     required this.noTelp,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
     this.dokumen_count,
   });
 
@@ -19,8 +19,8 @@ class Instansi extends Equatable {
   final String noTelp;
   // final int data_null;
 
-  final dynamic createdAt;
-  final dynamic updatedAt;
+  final dynamic? createdAt;
+  final dynamic? updatedAt;
   final List<Dokumen>? dokumenList;
 
   Instansi copyWith(

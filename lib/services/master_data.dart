@@ -1,14 +1,14 @@
 import '../models/models.dart';
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MasterData1 {
   final String baseUrl = 'http://103.23.198.126/api';
-  Future<List<Map<String, dynamic>>> getMasterData() async {
+  Future<List<dynamic>> getMasterData(String query) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = await pref.getString("accessToken");
     String path = "$baseUrl/createData";
@@ -18,44 +18,25 @@ class MasterData1 {
     };
     var response = await http.get(Uri.parse(path), headers: headers);
 
-    List<CreateData> sugestion = [];
+    List<dynamic> sugestion = [];
     if (response.statusCode == 200) {
-      final jsonS = json.decode(response.body)["data"];
-      sugestion = List<CreateData>.from(
-          jsonS.map((model) => CreateData.fromJson(model)));
-      // if (q.toUpperCase().contains("MASTERDATA")) {
-      //   return Future.value(sugestion
-      //       .map((e) => {
-      //             'jenisBelanja': e.jenisBelanja!.first!.jenisBelanja,
-      //             'idJenis': e.jenisBelanja!.first!.idJenis
-      //           })
-      //       .toList());
-      // } else if (q.toUpperCase().contains("NAMAINSTANSI")) {
-      //   return Future.value(sugestion
-      //       .map((e) => {
-      //             'namaInstansi': e.instansi!.first!.namaInstansi,
-      //             'idinstansi': e.instansi!.first!.idInstansi
-      //           })
-      //       .toList());
-      // } else if (q.toUpperCase().contains("REKANAN")) {
-      //   return Future.value(sugestion
-      //       .map((e) => {
-      //             'namaRekanan': e.rekanan!.first!.namaRekanan,
-      //             'idRekanan': e.rekanan!.first!.idRekanan
-      //           })
-      //       .toList());
-      // }
-
+      if (query.toUpperCase().contains("JENIS_BELANJA")) {
+        final jsonS = convert.json.decode(response.body);
+        var data = jsonS['data']['jenis_belanja'];
+        sugestion = List<JenisBelanja>.from(
+            data.map((model) => JenisBelanja.fromJson(model)));
+      } else if (query.toUpperCase().contains("INSTANSI")) {
+        final jsonS = convert.json.decode(response.body);
+        var data = jsonS['data']['instansi'];
+        sugestion =
+            List<Instansi>.from(data.map((model) => Instansi.fromJson(model)));
+      } else {
+        final jsonS = convert.json.decode(response.body);
+        var data = jsonS['data']['rekanan'];
+        sugestion =
+            List<Rekanan1>.from(data.map((model) => Rekanan1.fromJson(model)));
+      }
     }
-    return Future.value(sugestion
-        .map((e) => {
-              'jenisBelanja': e.jenisBelanja!.first!.jenisBelanja,
-              'idJenis': e.jenisBelanja!.first!.idJenis,
-              'namaInstansi': e.instansi!.first!.namaInstansi,
-              'idinstansi': e.instansi!.first!.idInstansi,
-              'namaRekanan': e.rekanan!.first!.namaRekanan,
-              'idRekanan': e.rekanan!.first!.idRekanan
-            })
-        .toList());
+    return sugestion;
   }
 }

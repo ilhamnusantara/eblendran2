@@ -73,6 +73,7 @@ class AuthService {
       pref.setString("username", user.user.username);
       pref.setInt('status', user.user.status);
       pref.setInt('idInstansi', user.user.idInstansi);
+      debugPrint(user.accessToken);
       return user;
     } else {
       throw Exception('Gagal Login');

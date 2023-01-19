@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:eblendrang2/models/models.dart';
+import 'package:eblendrang2/pages/home/main_page.dart';
+import 'package:eblendrang2/services/dokumen_service.dart';
 import 'package:eblendrang2/services/master_data.dart';
 import 'package:flutter/material.dart';
 import 'package:eblendrang2/themes.dart';
@@ -11,98 +14,24 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 class AddData extends StatefulWidget {
+  final User user;
+  AddData({required this.user});
   @override
   State<StatefulWidget> createState() {
     return _AddData();
   }
 }
 
-class Company {
-  //next, create endpoints for list of belanja
-  int id;
-  String jenisBelanja;
-  Company(this.id, this.jenisBelanja);
-  static List<Company> getCompanies() {
-    return <Company>[
-      Company(1, 'Belanja Modal Almari'),
-      Company(2, 'Belanja Modal Pendingin'),
-      Company(3, 'Belanja Modal Komputer Personal'),
-    ];
-  }
-}
-
-class Rekanan {
-  //next, create endpoints for list of company
-  int id_rekanan;
-  String nameRekanan;
-  Rekanan(this.id_rekanan, this.nameRekanan);
-  static List<Rekanan> getRekanans() {
-    return <Rekanan>[
-      Rekanan(1, 'CV Jaya Abadi'),
-      Rekanan(2, 'CV Elshaddai'),
-      Rekanan(3, 'CV. Saripah'),
-    ];
-  }
-}
-
 class _AddData extends State<AddData> {
-  List<Company> _companies = Company.getCompanies();
-  late List<DropdownMenuItem<Company>> _dropdownMenuItems;
-  late Company _selectedCompany;
-  List<Rekanan> _rekanans = Rekanan.getRekanans();
-  late List<DropdownMenuItem<Rekanan>> _dropdownMenuItems2;
-  late Rekanan _selectedRekanan;
   @override
   void initState() {
-    namaInstansi.text = "Kelurahan Kalijaten";
+    setDropdown();
+    namaInstansi.text = setNameInstansi();
     dateInput.text = "";
     dateInput2.text = "";
-    dateInput3.text = ""; //set the Initial value of text field
-    _dropdownMenuItems = buildDropdownMenuItems(_companies);
-    _selectedCompany = _dropdownMenuItems[0].value!;
-    _dropdownMenuItems2 = buildDropdownMenuItems2(_rekanans);
-    _selectedRekanan = _dropdownMenuItems2[0].value!;
+    dateInput3.text = "";
     super.initState();
     // super.initState();
-  }
-
-  List<DropdownMenuItem<Company>> buildDropdownMenuItems(List companies) {
-    List<DropdownMenuItem<Company>> items = [];
-    for (Company company in companies) {
-      items.add(
-        DropdownMenuItem(
-          value: company,
-          child: Text(company.jenisBelanja),
-        ),
-      );
-    }
-    return items;
-  }
-
-  List<DropdownMenuItem<Rekanan>> buildDropdownMenuItems2(List rekanans) {
-    List<DropdownMenuItem<Rekanan>> items2 = [];
-    for (Rekanan rekanan in rekanans) {
-      items2.add(
-        DropdownMenuItem(
-          value: rekanan,
-          child: Text(rekanan.nameRekanan),
-        ),
-      );
-    }
-    return items2;
-  }
-
-  onChangeDropdownItem(Company selectedCompany) {
-    setState(() {
-      _selectedCompany = selectedCompany;
-      print(_selectedCompany.jenisBelanja);
-    });
-  }
-
-  onChangeDropdownItem2(Rekanan selectedRekanan) {
-    setState(() {
-      _selectedRekanan = selectedRekanan;
-    });
   }
 
   TextEditingController dateInput = TextEditingController();
@@ -120,14 +49,41 @@ class _AddData extends State<AddData> {
   String? masterDataT;
   String? rekananT;
 
-  List<String> company = [
-    "Belanja Modal Almari",
-    "Belanja Modal Pendingin",
-    "Belanja Modal Komputer Personal"
-  ];
+  List<JenisBelanja>? company = [];
+  List<Instansi>? instansi1 = [];
+  List<Rekanan1>? rekanan1 = [];
+
+  String setNameInstansi() {
+    debugPrint(widget.user.user.idInstansi.toString());
+    String nama = "";
+    for (int i = 1; i <= instansi1!.length; i++) {
+      debugPrint("statement");
+      if (widget.user.user.idInstansi == instansi1![i].idInstansi) {
+        debugPrint(instansi1![i].namaInstansi);
+        nama = instansi1![i].namaInstansi;
+      }
+    }
+    return nama;
+  }
+
+  void setDropdown() async {
+    List<JenisBelanja>? data =
+        (await MasterData1().getMasterData("jenis_belanja"))
+            .cast<JenisBelanja>();
+    List<Instansi>? data1 =
+        (await MasterData1().getMasterData("instansi")).cast<Instansi>();
+    List<Rekanan1>? data2 =
+        (await MasterData1().getMasterData("rekanan")).cast<Rekanan1>();
+    setState(() {
+      company = data;
+      instansi1 = data1;
+      rekanan1 = data2;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future<void> showSuccessDialog() async {
+    Future<void> showSuccessDialog(String header, String body) async {
       return showDialog(
         context: context,
         builder: (BuildContext contex) => Container(
@@ -152,14 +108,16 @@ class _AddData extends State<AddData> {
                     ),
                   ),
                   Image.asset(
-                    'assets/icon_success.png',
+                    (header.toUpperCase().contains("SELAMAT"))
+                        ? 'assets/icon_success.png'
+                        : 'assets/icon_information2.png',
                     width: 100,
                   ),
                   const SizedBox(
                     height: 12,
                   ),
                   Text(
-                    'Uraaa.... !!!',
+                    header,
                     style: primaryTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: semiBold,
@@ -169,7 +127,7 @@ class _AddData extends State<AddData> {
                     height: 12,
                   ),
                   Text(
-                    'Data added successfully',
+                    body,
                     style: subtitleTextStyle,
                   ),
                   const SizedBox(
@@ -181,7 +139,14 @@ class _AddData extends State<AddData> {
                     child: TextButton(
                       onPressed: () {
                         //post data into server..
-                        Navigator.pushNamed(context, '/home');
+                        (header.toUpperCase().contains("SELAMAT"))
+                            ? Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      MainPage(cIndex: 0, fIndex: 0),
+                                ),
+                                (route) => false)
+                            : Navigator.pop(context);
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: backgroundColor12,
@@ -232,7 +197,7 @@ class _AddData extends State<AddData> {
               color: primaryColor,
             ),
             onPressed: () {
-              showSuccessDialog();
+              showSuccessDialog("", "");
             },
           ),
         ],
@@ -302,11 +267,11 @@ class _AddData extends State<AddData> {
                             ),
                           ],
                         ),
-                        items: company
+                        items: company!
                             .map((item) => DropdownMenuItem<String>(
-                                  value: item,
+                                  value: item.idJenis!.toString(),
                                   child: Text(
-                                    item,
+                                    item.jenisBelanja!,
                                     style: const TextStyle(
                                       fontSize: 14,
                                     ),
@@ -326,7 +291,7 @@ class _AddData extends State<AddData> {
                         iconEnabledColor: Colors.blue,
                         iconDisabledColor: Colors.grey,
                         buttonHeight: 50,
-                        buttonWidth: 320,
+                        buttonWidth: 285,
                         buttonPadding:
                             const EdgeInsets.only(left: 14, right: 14),
                         buttonDecoration: BoxDecoration(
@@ -390,7 +355,7 @@ class _AddData extends State<AddData> {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Container(
@@ -883,10 +848,10 @@ class _AddData extends State<AddData> {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
-            Container(
+            SizedBox(
               height: 40,
               child: Center(
                 child: Row(
@@ -895,7 +860,7 @@ class _AddData extends State<AddData> {
                       'assets/icon_ket.png',
                       width: 25,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     DropdownButton2(
@@ -906,11 +871,11 @@ class _AddData extends State<AddData> {
                           color: Theme.of(context).hintColor,
                         ),
                       ),
-                      items: Rekanan.getRekanans()
+                      items: rekanan1!
                           .map((item) => DropdownMenuItem<String>(
-                                value: item.nameRekanan,
+                                value: item.idRekanan!.toString(),
                                 child: Text(
-                                  item.nameRekanan,
+                                  item.namaRekanan!,
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
@@ -930,7 +895,7 @@ class _AddData extends State<AddData> {
                       iconEnabledColor: Colors.blue,
                       iconDisabledColor: Colors.grey,
                       buttonHeight: 50,
-                      buttonWidth: 320,
+                      buttonWidth: 285,
                       buttonPadding: const EdgeInsets.only(left: 14, right: 14),
                       buttonElevation: 2,
                       itemHeight: 40,
@@ -1212,8 +1177,28 @@ class _AddData extends State<AddData> {
               Icons.check,
               color: primaryColor,
             ),
-            onPressed: () {
-              showSuccessDialog();
+            onPressed: () async {
+              DokumenUpload docs = DokumenUpload(
+                  id_instansi: 2,
+                  id_jenis: 2,
+                  keterangan_belanja: keteranganT.text,
+                  no_spk: noSpk.text,
+                  tgl_spk: dateInput.text,
+                  no_bast: noBast.text,
+                  tgl_bast: dateInput2.text,
+                  tahun: "2023",
+                  satuan: satuanT.text,
+                  volume: int.parse(volumeT.text),
+                  nominal_belanja: int.parse(nomorPerUnit.text),
+                  id_rekanan: 1,
+                  no_pbb_ls: noPpbT.text,
+                  tgl_belanja: dateInput3.text);
+              String res = await DokumenService().addDokumen(docs);
+              if (res.toUpperCase().contains("DOKUMEN BERHASIL DI UNGGAH")) {
+                showSuccessDialog("SELAMAT", res);
+              } else {
+                showSuccessDialog("SORRY,..", res);
+              }
             },
           ),
         ],

@@ -23,16 +23,35 @@ class DokumenService {
   //   }
   // }
 
-  // Future<String> addDokumen() {
-  //   var path =
-  //       "$baseUrl/dokumenUpdate?id_dokumen=${docs.idDokumen}&tgl_spk=${docs.tglSpk}&no_spk=${docs.noSpk}&no_bast=${docs.noBast}&tgl_bast=${docs.tglBast}";
-  //   var headers = {'Content-Type': 'application/json'};
-  // }
+  Future<String> addDokumen(DokumenUpload doc) async {
+    var path =
+        "$baseUrl/store?id_jenis=${doc.id_jenis}&id_instansi=${doc.id_instansi}&keterangan_belanja=${doc.keterangan_belanja}&no_spk=${doc.no_spk}&tgl_spk=${doc.tgl_spk}&no_bast=${doc.no_bast}&tgl_bast=${doc.tgl_bast}&tahun=${doc.tahun}&satuan=${doc.satuan}&volume=${doc.volume}&nominal_belanja=${doc.nominal_belanja}&id_rekanan=${doc.id_rekanan}&no_pbb_ls=${doc.no_pbb_ls}&tanggal_belanja=${doc.tgl_belanja}";
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = await pref.getString("accessToken");
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer $token"
+    };
+    var response = await http.post(Uri.parse(path));
+    debugPrint("=> ${response.body}");
+    if (response.statusCode == 200) {
+      return "Dokumen Berhasil di Unggah";
+    } else {
+      return "Gagal Unggah Data";
+    }
+  }
 
   Future<int> updateDokumen(Dokumen docs) async {
     var path =
         "$baseUrl/dokumenUpdate?id_dokumen=${docs.idDokumen}&tgl_spk=${docs.tglSpk}&no_spk=${docs.noSpk}&no_bast=${docs.noBast}&tgl_bast=${docs.tglBast}";
-    var headers = {'Content-Type': 'application/json'};
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = await pref.getString("accessToken");
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer $token"
+    };
     var response = await http.put(Uri.parse(path), headers: headers);
     debugPrint(response.statusCode.toString());
     debugPrint("path=> $path");

@@ -23,7 +23,7 @@ class InstansiService {
     print(response.body);
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body)['data'];
-      print(data);
+      // print("frominstansi+> $data");
       List<Instansi> instansi = [];
       for (var item in data) {
         instansi.add(Instansi.fromJson(item));

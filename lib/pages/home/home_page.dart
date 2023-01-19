@@ -89,8 +89,10 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => AddData()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AddData(
+                          user: user,
+                        )));
               },
               child: Container(
                 width: 54,
