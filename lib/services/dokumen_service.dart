@@ -33,7 +33,7 @@ class DokumenService {
       'Content-Type': 'application/json',
       'Authorization': "Bearer $token"
     };
-    var response = await http.post(Uri.parse(path));
+    var response = await http.post(Uri.parse(path), headers: headers);
     debugPrint("=> ${response.body}");
     if (response.statusCode == 200) {
       return "Dokumen Berhasil di Unggah";
