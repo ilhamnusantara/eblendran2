@@ -26,7 +26,6 @@ class _AddData extends State<AddData> {
   @override
   void initState() {
     setDropdown();
-    namaInstansi.text = setNameInstansi();
     dateInput.text = "";
     dateInput2.text = "";
     dateInput3.text = "";
@@ -48,22 +47,20 @@ class _AddData extends State<AddData> {
   TextEditingController datePpbT = TextEditingController();
   String? masterDataT;
   String? rekananT;
+  String? namaInstansi1;
+  bool send = false;
 
   List<JenisBelanja>? company = [];
   List<Instansi>? instansi1 = [];
   List<Rekanan1>? rekanan1 = [];
 
   String setNameInstansi() {
-    debugPrint(widget.user.user.idInstansi.toString());
-    String nama = "";
-    for (int i = 1; i <= instansi1!.length; i++) {
-      debugPrint("statement");
+    for (int i = 0; i < instansi1!.length; i++) {
       if (widget.user.user.idInstansi == instansi1![i].idInstansi) {
-        debugPrint(instansi1![i].namaInstansi);
-        nama = instansi1![i].namaInstansi;
+        return instansi1![i].namaInstansi;
       }
     }
-    return nama;
+    return "-";
   }
 
   void setDropdown() async {
@@ -126,9 +123,11 @@ class _AddData extends State<AddData> {
                   const SizedBox(
                     height: 12,
                   ),
-                  Text(
-                    body,
-                    style: subtitleTextStyle,
+                  Center(
+                    child: Text(
+                      body,
+                      style: subtitleTextStyle,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -208,19 +207,7 @@ class _AddData extends State<AddData> {
 //controller masterDataT
     Widget masterData() {
       return Container(
-        margin: EdgeInsets.only(top: 10),
-        // child: DropdownSearch<String>(
-        //   mode: Mode.MENU,
-        //   showSelectedItems: true,
-        //   items: ["Brazil", "Italia (Disabled)", "Tunisia", 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada'],
-        //   dropdownSearchDecoration: InputDecoration(
-        //     labelText: "Menu mode",
-        //     hintText: "country in menu mode",
-        //   ),
-        //   popupItemDisabled: (String s) => s.startsWith('I'),
-        //   onChanged: print,
-        //   selectedItem: "Brazil",
-        // ),
+        margin: const EdgeInsets.only(top: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -234,7 +221,7 @@ class _AddData extends State<AddData> {
             const SizedBox(
               height: 12,
             ),
-            Container(
+            SizedBox(
               height: 40,
               child: Center(
                 child: Row(
@@ -318,20 +305,6 @@ class _AddData extends State<AddData> {
                         offset: const Offset(-20, 0),
                       ),
                     ),
-                    // Container(
-                    //   child : DropdownSearch<String>(
-                    //     mode: Mode.MENU,
-                    //     showSelectedItems: true,
-                    //     items: ["Brazil", "Italia (Disabled)", "Tunisia", 'Canada'],
-                    //     dropdownSearchDecoration: InputDecoration(
-                    //       labelText: "Menu mode",
-                    //       hintText: "country in menu mode",
-                    //     ),
-                    //     popupItemDisabled: (String s) => s.startsWith('I'),
-                    //     onChanged: print,
-                    //     selectedItem: "Brazil",
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -343,8 +316,9 @@ class _AddData extends State<AddData> {
 
 //controller namaInstansi
     Widget nameInstansi() {
+      namaInstansi.text = setNameInstansi();
       return Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -358,7 +332,7 @@ class _AddData extends State<AddData> {
             const SizedBox(
               height: 12,
             ),
-            Container(
+            SizedBox(
               height: 40,
               child: Center(
                 child: Row(
@@ -367,23 +341,97 @@ class _AddData extends State<AddData> {
                       'assets/icon_email.png',
                       width: 25,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     Expanded(
-                        child: TextFormField(
-                      readOnly: true,
-                      controller: namaInstansi,
-                      decoration: InputDecoration(
-                        hintText: namaInstansi.text,
-                        hintStyle: primaryTextStyle,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: grayChoose,
-                          ),
-                        ),
-                      ),
-                    )),
+                        child: (widget.user.user.status == 0)
+                            ? TextFormField(
+                                readOnly: true,
+                                controller: namaInstansi,
+                                decoration: InputDecoration(
+                                  hintText: namaInstansi.text,
+                                  hintStyle: primaryTextStyle,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: grayChoose,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : DropdownButtonHideUnderline(
+                                child: DropdownButton2(
+                                  hint: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.list,
+                                        size: 16,
+                                        color: Colors.blue,
+                                      ),
+                                      const SizedBox(
+                                        width: 4,
+                                      ),
+                                      Text(
+                                        'Pilih Instansi',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Theme.of(context).hintColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  items: instansi1!
+                                      .map((item) => DropdownMenuItem<String>(
+                                            value: item.idInstansi.toString(),
+                                            child: Text(
+                                              item.namaInstansi,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ))
+                                      .toList(),
+                                  value: namaInstansi1,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      namaInstansi1 = value as String;
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.arrow_forward_ios_outlined,
+                                  ),
+                                  iconSize: 14,
+                                  iconEnabledColor: Colors.blue,
+                                  iconDisabledColor: Colors.grey,
+                                  buttonHeight: 50,
+                                  buttonWidth: 285,
+                                  buttonPadding: const EdgeInsets.only(
+                                      left: 14, right: 14),
+                                  buttonDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(
+                                      color: Colors.black26,
+                                    ),
+                                    color: Colors.white,
+                                  ),
+                                  buttonElevation: 2,
+                                  itemHeight: 40,
+                                  itemPadding: const EdgeInsets.only(
+                                      left: 14, right: 14),
+                                  dropdownMaxHeight: 200,
+                                  dropdownWidth: 300,
+                                  dropdownPadding: null,
+                                  dropdownDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14),
+                                    color: Colors.white,
+                                  ),
+                                  dropdownElevation: 8,
+                                  scrollbarRadius: const Radius.circular(40),
+                                  scrollbarThickness: 6,
+                                  scrollbarAlwaysShow: true,
+                                  offset: const Offset(-20, 0),
+                                ),
+                              )),
                   ],
                 ),
               ),
@@ -925,7 +973,7 @@ class _AddData extends State<AddData> {
 //controller noPpbT
     Widget noPpb() {
       return Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -936,10 +984,10 @@ class _AddData extends State<AddData> {
                 fontWeight: medium,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
-            Container(
+            SizedBox(
               height: 40,
               child: Center(
                 child: Row(
@@ -1024,6 +1072,7 @@ class _AddData extends State<AddData> {
                           print(formattedDate);
                           setState(() {
                             dateInput3.text = formattedDate;
+                            send = true;
                           });
                         } else {
                           print("Tanggal Kosong");
@@ -1142,7 +1191,9 @@ class _AddData extends State<AddData> {
                   rekanan(),
                   noPpb(),
                   dateppb(),
-                  // button(),
+                  const SizedBox(
+                    height: 20,
+                  )
                 ],
               ),
             ),
@@ -1177,44 +1228,41 @@ class _AddData extends State<AddData> {
               Icons.check,
               color: primaryColor,
             ),
-            onPressed: () async {
-              DokumenUpload docs = DokumenUpload(
-                  id_instansi: 2,
-                  id_jenis: 2,
-                  keterangan_belanja: keteranganT.text,
-                  no_spk: noSpk.text,
-                  tgl_spk: dateInput.text,
-                  no_bast: noBast.text,
-                  tgl_bast: dateInput2.text,
-                  tahun: "2023",
-                  satuan: satuanT.text,
-                  volume: int.parse(volumeT.text),
-                  nominal_belanja: int.parse(nomorPerUnit.text),
-                  id_rekanan: 1,
-                  no_pbb_ls: noPpbT.text,
-                  tgl_belanja: dateInput3.text);
-              String res = await DokumenService().addDokumen(docs);
-              if (res.toUpperCase().contains("DOKUMEN BERHASIL DI UNGGAH")) {
-                showSuccessDialog("SELAMAT", res);
-              } else {
-                showSuccessDialog("SORRY,..", res);
-              }
-            },
+            onPressed: (send)
+                ? () async {
+                    DokumenUpload docs = DokumenUpload(
+                        id_instansi: 2,
+                        id_jenis: 2,
+                        keterangan_belanja: keteranganT.text,
+                        no_spk: noSpk.text,
+                        tgl_spk: dateInput.text,
+                        no_bast: noBast.text,
+                        tgl_bast: dateInput2.text,
+                        tahun: "2023",
+                        satuan: satuanT.text,
+                        volume: int.parse(volumeT.text),
+                        nominal_belanja: int.parse(nomorPerUnit.text),
+                        id_rekanan: 1,
+                        no_pbb_ls: noPpbT.text,
+                        tgl_belanja: dateInput3.text);
+                    String res = await DokumenService().addDokumen(docs);
+                    if (res
+                        .toUpperCase()
+                        .contains("DOKUMEN BERHASIL DI UNGGAH")) {
+                      showSuccessDialog("SELAMAT", res);
+                    } else {
+                      showSuccessDialog("SORRY,..", res);
+                    }
+                  }
+                : () {
+                    showSuccessDialog(
+                        "Maaf", "Harap Lengkapi Data Terlebih Dahulu..");
+                  },
           ),
         ],
         foregroundColor: blck,
       ),
       body: content(),
     );
-    DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-          value: item,
-          child: Text(
-            item,
-            style: primaryTextStyle.copyWith(
-              fontSize: 16,
-              fontWeight: medium,
-            ),
-          ),
-        );
   }
 }
