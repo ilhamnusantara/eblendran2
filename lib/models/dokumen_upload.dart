@@ -2,8 +2,8 @@ part of 'models.dart';
 
 class DokumenUpload extends Equatable {
   DokumenUpload(
-      {required this.id_instansi,
-      required this.id_jenis,
+      {this.id_instansi,
+      this.id_jenis,
       required this.keterangan_belanja,
       required this.no_spk,
       required this.tgl_spk,
@@ -11,14 +11,14 @@ class DokumenUpload extends Equatable {
       required this.tgl_bast,
       required this.tahun,
       required this.satuan,
-      required this.volume,
-      required this.nominal_belanja,
-      required this.id_rekanan,
+      this.volume,
+      this.nominal_belanja,
+      this.id_rekanan,
       required this.no_pbb_ls,
       required this.tgl_belanja});
 
-  final int id_jenis;
-  final int id_instansi;
+  final int? id_jenis;
+  final int? id_instansi;
   final String keterangan_belanja;
   final String no_spk;
   final String tgl_spk;
@@ -26,9 +26,9 @@ class DokumenUpload extends Equatable {
   final String tgl_bast;
   final String tahun;
   final String satuan;
-  final int volume;
-  final int nominal_belanja;
-  final int id_rekanan;
+  final int? volume;
+  final int? nominal_belanja;
+  final int? id_rekanan;
   final String no_pbb_ls;
   final String tgl_belanja;
 

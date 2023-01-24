@@ -47,7 +47,7 @@ class _InstansiState extends State<Informasi> {
                 height: 10,
               ),
               Container(
-                height: 120,
+                height: 135,
                 margin: const EdgeInsets.only(
                   left: 10,
                   right: 15,
@@ -65,7 +65,7 @@ class _InstansiState extends State<Informasi> {
                           //   ),
                           // ),
                           Text(
-                            'Aplikasi ini bertujuan untuk mengetahui dokumen mana yang belum melakukan upload data SPK, BAST, dan Foto. Dan dapat berfungsi juga untuk mengupdate sebuah data',
+                            'aplikasi ini dibuat untuk tujuan mengetahui dokumen mana yang belum melakukan upload berkas SPK, BAST, dan Foto. Selain itu pada aplikasi ini berfungsi untuk melakukan update data pada dokumen yang akan dilakukan perubahan data',
                             style: subtitleTextStyle.copyWith(
                               fontWeight: light,
                             ),
@@ -109,6 +109,7 @@ class _InstansiState extends State<Informasi> {
                 ),
               ),
               Container(
+                height: 140,
                 margin: const EdgeInsets.only(
                   left: 10,
                   right: 15,
@@ -134,14 +135,8 @@ class _InstansiState extends State<Informasi> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Text(
-                          //   'Modul Home',
-                          //   style: primaryTextStyle.copyWith(
-                          //     fontWeight: semiBold,
-                          //   ),
-                          // ),
                           Text(
-                            'Pada Modul Home digunakan untuk melihat Instansi mana yang kurang mengupload berkas pada data dokumen',
+                            'Pada modul home digunakan untuk melihat masing masing instansi yang belum lengkap dalam mengupload data dokumennya yang dimana nilai yang diambil dari File SPK, File BAST dan Foto',
                             style: subtitleTextStyle.copyWith(
                               fontWeight: light,
                             ),
@@ -181,6 +176,7 @@ class _InstansiState extends State<Informasi> {
                 ),
               ),
               Container(
+                height: 160,
                 margin: const EdgeInsets.only(
                   left: 10,
                   right: 15,
@@ -206,14 +202,8 @@ class _InstansiState extends State<Informasi> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Text(
-                          //   'Modul Home',
-                          //   style: primaryTextStyle.copyWith(
-                          //     fontWeight: semiBold,
-                          //   ),
-                          // ),
                           Text(
-                            'Pada modul dokumen ini user dapat melihat dokumen yang sudah dibuat pada website e-blendrang, dan dapat melakukan filter dokumen mana yang belum melakukan upload file data ',
+                            'Pada modul dokumen user dapat melihat dokumen yang sudah dibuat pada website e-blendrang, dan dapat melakukan filter dokumen berdasarkan file SPK, file BAST, dan Foto yang belum melakukan upload data ',
                             style: subtitleTextStyle.copyWith(
                               fontWeight: light,
                             ),

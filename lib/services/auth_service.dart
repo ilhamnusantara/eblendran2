@@ -6,7 +6,7 @@ import 'package:eblendrang2/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  String baseUrl = 'http://103.23.198.126/api';
+  String baseUrl = 'http://taman.e-blendrang.com/api';
   Future<User> register({
     required String name,
     required String username,

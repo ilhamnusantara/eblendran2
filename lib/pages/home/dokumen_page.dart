@@ -81,7 +81,7 @@ class _DokumenPageState extends State<DokumenPage> {
     Widget header() {
       return Container(
         margin: EdgeInsets.only(
-          top: 30,
+          top: 67,
           left: marginLogin,
           right: marginLogin,
         ),
@@ -138,7 +138,7 @@ class _DokumenPageState extends State<DokumenPage> {
           right: marginLogin,
         ),
         child: Text(
-          'Informasi Instansi belum upload file',
+          'Informasi Data Dokumen',
           style: primaryTextStyle.copyWith(
             fontSize: 18,
             fontWeight: semiBold,
@@ -166,7 +166,7 @@ class _DokumenPageState extends State<DokumenPage> {
       return Container(
         height: 50,
         width: double.infinity,
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.all(12),
         child: TextButton(
           onPressed: () {
             filtered(context);
@@ -310,7 +310,7 @@ class _DokumenPageState extends State<DokumenPage> {
     Widget item1() {
       return Expanded(
           child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child:
             BlocBuilder<DokumenBloc, DokumenState>(builder: (context, state) {
           if (state is DokumenLoadingState) {
@@ -319,6 +319,9 @@ class _DokumenPageState extends State<DokumenPage> {
             List<Dokumen> dokumen = state.dokumenList.toList();
             if (dokumen.isNotEmpty) {
               return ListView.builder(
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                  ),
                   shrinkWrap: true,
                   itemCount: dokumen.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -782,6 +785,7 @@ class _DokumenPageState extends State<DokumenPage> {
         //         selectedIndex = index;
         //       });
         //     }),
+
         (selectedIndex == 0)
             ? item1()
             : (selectedIndex == 1)

@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class InstansiService {
-  String baseUrl = 'http://103.23.198.126/api';
+  String baseUrl = 'http://taman.e-blendrang.com/api';
 
   Future<List<Instansi>> getInstansi() async {
     SharedPreferences pref = await SharedPreferences.getInstance();

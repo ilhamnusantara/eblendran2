@@ -24,7 +24,7 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: Colors.white,
         child: Image.asset(
           'assets/icon_information2.png',
-          width: 40,
+          width: 33,
         ),
       );
     }

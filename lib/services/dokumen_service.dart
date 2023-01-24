@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class DokumenService {
-  String baseUrl = 'http://103.23.198.126/api';
+  String baseUrl = 'http://taman.e-blendrang.com/api';
   // String id;
 
   // List dokumens = [];
@@ -34,11 +34,11 @@ class DokumenService {
       'Authorization': "Bearer $token"
     };
     var response = await http.post(Uri.parse(path), headers: headers);
-    debugPrint("=> ${response.body}");
+    debugPrint("=> ${response.statusCode}");
     if (response.statusCode == 200) {
       return "Dokumen Berhasil di Unggah";
     } else {
-      return "Gagal Unggah Data";
+      return "Lengkapi data anda";
     }
   }
 

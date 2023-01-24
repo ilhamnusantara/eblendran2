@@ -48,11 +48,13 @@ class _AddData extends State<AddData> {
   String? masterDataT;
   String? rekananT;
   String? namaInstansi1;
+  String? tahun;
   bool send = false;
 
   List<JenisBelanja>? company = [];
   List<Instansi>? instansi1 = [];
   List<Rekanan1>? rekanan1 = [];
+  List<String>? tahun1 = ['2023', '2022'];
 
   String setNameInstansi() {
     for (int i = 0; i < instansi1!.length; i++) {
@@ -235,6 +237,7 @@ class _AddData extends State<AddData> {
                     ),
                     DropdownButtonHideUnderline(
                       child: DropdownButton2(
+                        isExpanded: true,
                         hint: Row(
                           children: [
                             const Icon(
@@ -243,7 +246,7 @@ class _AddData extends State<AddData> {
                               color: Colors.blue,
                             ),
                             const SizedBox(
-                              width: 4,
+                              width: 2,
                             ),
                             Text(
                               'Pilih Master Data',
@@ -278,7 +281,7 @@ class _AddData extends State<AddData> {
                         iconEnabledColor: Colors.blue,
                         iconDisabledColor: Colors.grey,
                         buttonHeight: 50,
-                        buttonWidth: 285,
+                        buttonWidth: 310,
                         buttonPadding:
                             const EdgeInsets.only(left: 14, right: 14),
                         buttonDecoration: BoxDecoration(
@@ -1088,83 +1091,114 @@ class _AddData extends State<AddData> {
       );
     }
 
-    // Widget button() {
-    //   return Container(
-    //     margin: EdgeInsets.only(
-    //       top: 10,
-    //       bottom: 30,
-    //     ),
-    //     child: Row(
-    //       children: [
-    //         Expanded(
-    //             child: TextButton(
-    //           onPressed: () {
-    //             Navigator.pushNamed(context, '/pdf');
-    //           },
-    //           child: Text(
-    //             "File SPK",
-    //             style: secondTextStyle.copyWith(
-    //               fontSize: 16,
-    //               fontWeight: medium,
-    //             ),
-    //           ),
-    //           style: TextButton.styleFrom(
-    //             backgroundColor: backgroundColor12,
-    //             shape: RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.circular(12),
-    //             ),
-    //           ),
-    //           // color: Colors.black,
-    //           // textColor: Colors.white,
-    //         )),
-    //         SizedBox(
-    //           width: 8,
-    //         ),
-    //         Expanded(
-    //             child: TextButton(
-    //           onPressed: _chooseImageFromCamera,
-    //           child: Text(
-    //             "Foto",
-    //             style: secondTextStyle.copyWith(
-    //               fontSize: 16,
-    //               fontWeight: medium,
-    //             ),
-    //           ),
-    //           style: TextButton.styleFrom(
-    //             backgroundColor: backgroundColor12,
-    //             shape: RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.circular(12),
-    //             ),
-    //           ),
-    //           // color: Colors.black,
-    //           // textColor: Colors.white,
-    //         )),
-    //         SizedBox(
-    //           width: 8,
-    //         ),
-    //         Expanded(
-    //             child: TextButton(
-    //           onPressed: () {},
-    //           child: Text(
-    //             "File BAST",
-    //             style: secondTextStyle.copyWith(
-    //               fontSize: 16,
-    //               fontWeight: medium,
-    //             ),
-    //           ),
-    //           style: TextButton.styleFrom(
-    //             backgroundColor: backgroundColor12,
-    //             shape: RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.circular(12),
-    //             ),
-    //           ),
-    //           // color: Colors.black,
-    //           // textColor: Colors.white,
-    //         )),
-    //       ],
-    //     ),
-    //   );
-    // }
+    Widget tahunW() {
+      return Container(
+        margin: const EdgeInsets.only(top: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Tahun',
+              style: primaryTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: medium,
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            SizedBox(
+              height: 40,
+              child: Center(
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/icon_masterData.png',
+                      width: 25,
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        hint: Row(
+                          children: [
+                            const Icon(
+                              Icons.list,
+                              size: 16,
+                              color: Colors.blue,
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              'Pilih Tahun Belanja',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Theme.of(context).hintColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        items: tahun1!
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        value: tahun,
+                        onChanged: (value) {
+                          setState(() {
+                            tahun = value as String;
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.arrow_forward_ios_outlined,
+                        ),
+                        iconSize: 14,
+                        iconEnabledColor: Colors.blue,
+                        iconDisabledColor: Colors.grey,
+                        buttonHeight: 50,
+                        buttonWidth: 285,
+                        buttonPadding:
+                            const EdgeInsets.only(left: 14, right: 14),
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: Colors.black26,
+                          ),
+                          color: Colors.white,
+                        ),
+                        buttonElevation: 2,
+                        itemHeight: 40,
+                        itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                        dropdownMaxHeight: 200,
+                        dropdownWidth: 300,
+                        dropdownPadding: null,
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: Colors.white,
+                        ),
+                        dropdownElevation: 8,
+                        scrollbarRadius: const Radius.circular(40),
+                        scrollbarThickness: 6,
+                        scrollbarAlwaysShow: true,
+                        offset: const Offset(-20, 0),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     Widget content() {
       return SingleChildScrollView(
@@ -1191,6 +1225,7 @@ class _AddData extends State<AddData> {
                   rekanan(),
                   noPpb(),
                   dateppb(),
+                  tahunW(),
                   const SizedBox(
                     height: 20,
                   )
@@ -1231,18 +1266,27 @@ class _AddData extends State<AddData> {
             onPressed: (send)
                 ? () async {
                     DokumenUpload docs = DokumenUpload(
-                        id_instansi: 2,
-                        id_jenis: 2,
+                        id_instansi: (widget.user.user.status == 0)
+                            ? widget.user.user.idInstansi
+                            : int.parse(namaInstansi1!),
+                        id_jenis: (masterDataT == null)
+                            ? null
+                            : int.parse(masterDataT!),
                         keterangan_belanja: keteranganT.text,
                         no_spk: noSpk.text,
                         tgl_spk: dateInput.text,
                         no_bast: noBast.text,
                         tgl_bast: dateInput2.text,
-                        tahun: "2023",
+                        tahun: tahun ?? "2023",
                         satuan: satuanT.text,
-                        volume: int.parse(volumeT.text),
-                        nominal_belanja: int.parse(nomorPerUnit.text),
-                        id_rekanan: 1,
+                        volume: (volumeT.text == "")
+                            ? null
+                            : int.parse(volumeT.text),
+                        nominal_belanja: (nomorPerUnit.text == "")
+                            ? null
+                            : int.parse(nomorPerUnit.text),
+                        id_rekanan:
+                            (rekananT == null) ? null : int.parse(rekananT!),
                         no_pbb_ls: noPpbT.text,
                         tgl_belanja: dateInput3.text);
                     String res = await DokumenService().addDokumen(docs);

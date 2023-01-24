@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MasterData1 {
-  final String baseUrl = 'http://103.23.198.126/api';
+  final String baseUrl = 'http://taman.e-blendrang.com/api';
   Future<List<dynamic>> getMasterData(String query) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = await pref.getString("accessToken");
@@ -17,7 +17,7 @@ class MasterData1 {
       'Authorization': "Bearer $token"
     };
     var response = await http.get(Uri.parse(path), headers: headers);
-
+    debugPrint("response dropdown=>" + response.statusCode.toString());
     List<dynamic> sugestion = [];
     if (response.statusCode == 200) {
       if (query.toUpperCase().contains("JENIS_BELANJA")) {
