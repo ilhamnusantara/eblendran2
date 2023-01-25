@@ -281,7 +281,7 @@ class _AddData extends State<AddData> {
                         iconEnabledColor: Colors.blue,
                         iconDisabledColor: Colors.grey,
                         buttonHeight: 50,
-                        buttonWidth: 310,
+                        buttonWidth: 289,
                         buttonPadding:
                             const EdgeInsets.only(left: 14, right: 14),
                         buttonDecoration: BoxDecoration(
