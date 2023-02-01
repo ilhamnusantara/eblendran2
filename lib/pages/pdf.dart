@@ -11,6 +11,7 @@ import 'package:pdf/widgets.dart' as pw;
 // import 'package:ext_storage/ext_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../blocs/blocs_exports.dart';
 import '../models/models.dart';
 import '../services/dokumen_service.dart';
 
@@ -36,6 +37,7 @@ class _Pdf extends State<Pdf> {
   final picker = ImagePicker();
   final pdf = pw.Document();
   List<File> _image = [];
+  File? pdfSend;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +49,7 @@ class _Pdf extends State<Pdf> {
                   icon: const Icon(Icons.upload_file),
                   onPressed: () {
                     createPDF();
-                    savePDF();
+                    savePDF(widget.source);
                   })
               : const SizedBox()
         ],
@@ -59,23 +61,25 @@ class _Pdf extends State<Pdf> {
         },
       ),
       body: _image.isNotEmpty
-          ? ListView.builder(
-              itemCount: _image.length,
-              itemBuilder: (context, index) => Container(
-                height: 400,
-                width: double.infinity,
-                margin: const EdgeInsets.all(8),
-                child: (widget.source.toUpperCase().contains("CAMERA"))
-                    ? Image.file(
-                        _image[index],
-                        fit: BoxFit.cover,
-                      )
-                    : Text(
-                        "File 1 : ${_image[index].path}",
-                        style: blackFontStyle5,
-                      ),
-              ),
-            )
+          ? ((widget.source.toUpperCase().contains("CAMERA"))
+              ? ListView.builder(
+                  itemCount: _image.length,
+                  itemBuilder: (context, index) => Container(
+                    height: 400,
+                    width: double.infinity,
+                    margin: const EdgeInsets.all(8),
+                    child: Image.file(
+                      _image[index],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
+              : Container(
+                  height: 400,
+                  width: double.infinity,
+                  margin: const EdgeInsets.all(8),
+                  child: Text("File PDF = ${pdfSend!.path}"),
+                ))
           : const SizedBox(
               child: Center(
                 child: Text("No File Selected ..."),
@@ -97,7 +101,9 @@ class _Pdf extends State<Pdf> {
     }
     setState(() {
       if (pickedFile != null) {
-        _image.add(pickedFile);
+        (widget.source.toUpperCase().contains("CAMERA"))
+            ? _image.add(pickedFile)
+            : pdfSend = pickedFile;
       } else {
         print('No image selected');
       }
@@ -122,7 +128,7 @@ class _Pdf extends State<Pdf> {
     return docsPath;
   }
 
-  Future<dynamic> savePDF() async {
+  Future<dynamic> savePDF(String src) async {
     try {
       // final dir = await ExtStorage.getExternalStoragePublicDirectory(
       //     ExtStorage.DIRECTORY_DOWNLOADS);
@@ -132,7 +138,10 @@ class _Pdf extends State<Pdf> {
       // final file = File('${dir}/filename${DateTime.now()}.pdf');
       // final file = File('${dir.path}/filename${DateTime.now()}.pdf');
       final file = File('${dir}/filename${DateTime.now()}.pdf');
-      var file1 = await file.writeAsBytes(await pdf.save());
+      var file1;
+      (src.toUpperCase().contains("CAMERA"))
+          ? file1 = await file.writeAsBytes(await pdf.save()) //error disini
+          : file1 = await file.writeAsBytes(pdfSend!);
       File fileUpload = File(file1.path);
       String res = await DokumenService().asyncFileUpload(
           widget.dokumen.idDokumen.toString(),
@@ -148,6 +157,8 @@ class _Pdf extends State<Pdf> {
               desc: "Data berhasil di update.. Terimakasih.",
               btnOkOnPress: () async {
                 setState(() {});
+                context.read<InstansiBloc>().add(LoadInstansi());
+                context.read<DokumenBloc>().add(LoadDokumen());
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) =>
@@ -163,6 +174,8 @@ class _Pdf extends State<Pdf> {
               desc: "Data gagal di upload, Silahkan ulangi lagi ya...",
               btnOkOnPress: () async {
                 setState(() {});
+                context.read<InstansiBloc>().add(LoadInstansi());
+                context.read<DokumenBloc>().add(LoadDokumen());
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) =>

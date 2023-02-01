@@ -725,6 +725,8 @@ class _DetailPage extends State<DetailPage> {
                   title: 'Warning !',
                   desc: "Gagal upload Data, Silahkan ulangi sekali lagi...",
                   btnOkOnPress: () {
+                    context.read<InstansiBloc>().add(LoadInstansi());
+                    context.read<DokumenBloc>().add(LoadDokumen());
                     Navigator.pop(context);
                   },
                 ).show();
@@ -737,6 +739,8 @@ class _DetailPage extends State<DetailPage> {
                   desc: "Data berhasil di update.. Terimakasih.",
                   btnOkOnPress: () async {
                     setState(() {});
+                    context.read<InstansiBloc>().add(LoadInstansi());
+                    context.read<DokumenBloc>().add(LoadDokumen());
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
