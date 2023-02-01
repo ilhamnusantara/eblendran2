@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:eblendrang2/themes.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:eblendrang2/pages/detail_dokumen.dart';
 import 'package:flutter/material.dart';
@@ -60,13 +62,19 @@ class _Pdf extends State<Pdf> {
           ? ListView.builder(
               itemCount: _image.length,
               itemBuilder: (context, index) => Container(
-                  height: 400,
-                  width: double.infinity,
-                  margin: const EdgeInsets.all(8),
-                  child: Image.file(
-                    _image[index],
-                    fit: BoxFit.cover,
-                  )),
+                height: 400,
+                width: double.infinity,
+                margin: const EdgeInsets.all(8),
+                child: (widget.source.toUpperCase().contains("CAMERA"))
+                    ? Image.file(
+                        _image[index],
+                        fit: BoxFit.cover,
+                      )
+                    : Text(
+                        "File 1 : ${_image[index].path}",
+                        style: blackFontStyle5,
+                      ),
+              ),
             )
           : const SizedBox(
               child: Center(
@@ -77,12 +85,19 @@ class _Pdf extends State<Pdf> {
   }
 
   Future<dynamic> getImageFromGallery(String source) async {
-    final pickedFile = (source.toUpperCase().contains("CAMERA"))
-        ? await picker.getImage(source: ImageSource.camera, imageQuality: 50)
-        : await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+    File pickedFile;
+    if (source.toUpperCase().contains("CAMERA")) {
+      final a =
+          await picker.getImage(source: ImageSource.camera, imageQuality: 50);
+      pickedFile = File(a!.path);
+    } else {
+      var a = await FilePicker.platform
+          .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+      pickedFile = File(a!.files.single.path!);
+    }
     setState(() {
       if (pickedFile != null) {
-        _image.add(File(pickedFile.path));
+        _image.add(pickedFile);
       } else {
         print('No image selected');
       }
