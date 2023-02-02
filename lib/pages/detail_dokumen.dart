@@ -682,7 +682,13 @@ class _DetailPage extends State<DetailPage> {
           icon: const Icon(Icons.close),
           color: Colors.white,
           onPressed: () {
-            Navigator.pop(context);
+            setState(() {});
+            context.read<InstansiBloc>().add(LoadInstansi());
+            context.read<DokumenBloc>().add(LoadDokumen());
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MainPage(cIndex: 0, fIndex: 0)));
           },
         ),
         centerTitle: true,

@@ -44,11 +44,13 @@ class _Pdf extends State<Pdf> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          (_image.isNotEmpty)
+          (_image.isNotEmpty || pdfSend != null)
               ? IconButton(
                   icon: const Icon(Icons.upload_file),
                   onPressed: () {
-                    createPDF();
+                    (widget.source.toUpperCase().contains("CAMERA"))
+                        ? createPDF()
+                        : null;
                     savePDF(widget.source);
                   })
               : const SizedBox()
@@ -60,7 +62,7 @@ class _Pdf extends State<Pdf> {
           getImageFromGallery(widget.source);
         },
       ),
-      body: _image.isNotEmpty
+      body: (_image.isNotEmpty || pdfSend != null)
           ? ((widget.source.toUpperCase().contains("CAMERA"))
               ? ListView.builder(
                   itemCount: _image.length,
@@ -104,6 +106,7 @@ class _Pdf extends State<Pdf> {
         (widget.source.toUpperCase().contains("CAMERA"))
             ? _image.add(pickedFile)
             : pdfSend = pickedFile;
+        debugPrint(pdfSend!.path);
       } else {
         print('No image selected');
       }
@@ -141,7 +144,8 @@ class _Pdf extends State<Pdf> {
       var file1;
       (src.toUpperCase().contains("CAMERA"))
           ? file1 = await file.writeAsBytes(await pdf.save()) //error disini
-          : file1 = await file.writeAsBytes(pdfSend!);
+          // : file1 = await file.writeAsBytes(pdfSend!);
+          : file1 = pdfSend!;
       File fileUpload = File(file1.path);
       String res = await DokumenService().asyncFileUpload(
           widget.dokumen.idDokumen.toString(),

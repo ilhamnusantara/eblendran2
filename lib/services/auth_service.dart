@@ -73,6 +73,9 @@ class AuthService {
       pref.setString("username", user.user.username);
       pref.setInt('status', user.user.status);
       pref.setInt('idInstansi', user.user.idInstansi);
+
+      String? session1 = await pref.getString("session");
+      session1 == null ? pref.setString("session", "2023") : null;
       debugPrint(user.accessToken);
       return user;
     } else {
