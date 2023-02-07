@@ -93,9 +93,11 @@ class _Pdf extends State<Pdf> {
   Future<dynamic> getImageFromGallery(String source) async {
     File pickedFile;
     if (source.toUpperCase().contains("CAMERA")) {
+      //debugPrint("in: getImageFromGallery; Source: $source;");
       final a =
           await picker.getImage(source: ImageSource.camera, imageQuality: 50);
       pickedFile = File(a!.path);
+      //debugPrint("in: getImageFromGallery; Source: $source; Path: $pickedFile");
     } else {
       var a = await FilePicker.platform
           .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
@@ -106,7 +108,7 @@ class _Pdf extends State<Pdf> {
         (widget.source.toUpperCase().contains("CAMERA"))
             ? _image.add(pickedFile)
             : pdfSend = pickedFile;
-        debugPrint(pdfSend!.path);
+        //debugPrint("in: setState picked file not null; Source: $source;");
       } else {
         print('No image selected');
       }
@@ -116,6 +118,7 @@ class _Pdf extends State<Pdf> {
   createPDF() async {
     for (var img in _image) {
       final image = pw.MemoryImage(img.readAsBytesSync());
+      //debugPrint("in: createPDF(); Source: CAMERA; ");
 
       pdf.addPage(pw.Page(
           pageFormat: PdfPageFormat.a4,

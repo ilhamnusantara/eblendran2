@@ -609,7 +609,7 @@ class _DetailPage extends State<DetailPage> {
                 : Expanded(
                     child: TextButton(
                     onPressed: () {
-                      filtered1(context, "SPK", title: "Update File BAST");
+                      filtered1(context, "BAST", title: "Update File BAST");
                     },
                     child: Center(
                       child: Text(
