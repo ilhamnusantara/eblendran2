@@ -47,6 +47,7 @@ class User extends Equatable {
 class UserClass extends Equatable {
   UserClass({
     required this.id,
+    required this.nama_instansi,
     required this.name,
     required this.username,
     required this.idInstansi,
@@ -58,6 +59,7 @@ class UserClass extends Equatable {
   });
 
   final int id;
+  final String nama_instansi;
   final String name;
   final String username;
   final int idInstansi;
@@ -69,6 +71,8 @@ class UserClass extends Equatable {
 
   UserClass copyWith({
     required int id,
+    required String nama_instansi,
+    required String instansi,
     required String name,
     required String username,
     required int idInstansi,
@@ -80,6 +84,7 @@ class UserClass extends Equatable {
   }) =>
       UserClass(
         id: id ?? this.id,
+        nama_instansi: nama_instansi ?? this.nama_instansi,
         name: name ?? this.name,
         username: username ?? this.username,
         idInstansi: idInstansi ?? this.idInstansi,
@@ -92,6 +97,7 @@ class UserClass extends Equatable {
 
   factory UserClass.fromJson(Map<String, dynamic> json) => UserClass(
         id: json["id"],
+        nama_instansi: json["instansi"]["nama_instansi"],
         name: json["name"],
         username: json["username"],
         idInstansi: json["id_instansi"],
@@ -104,6 +110,7 @@ class UserClass extends Equatable {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "nama_instansi": nama_instansi,
         "name": name,
         "username": username,
         "id_instansi": idInstansi,

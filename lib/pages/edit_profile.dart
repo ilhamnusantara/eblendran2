@@ -132,18 +132,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 fontSize: 14,
               ),
             ),
-            // TextFormField(
-            //   readOnly: true,
-            //   decoration: InputDecoration(
-            //     hintText: user.user.instansi.namaInstansi,
-            //     hintStyle: subtitleTextStyle,
-            //     enabledBorder: UnderlineInputBorder(
-            //       borderSide: BorderSide(
-            //         color: grayChoose,
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            TextFormField(
+              readOnly: true,
+              decoration: InputDecoration(
+                hintText: user.user.nama_instansi,
+                hintStyle: subtitleTextStyle,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: grayChoose,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       );
@@ -308,13 +308,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             color: Colors.yellow,
                           ),
                           const SizedBox(
-                            width: 4,
+                            width: 10,
                           ),
                           Text(
                             'Pilih Tahun',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Theme.of(context).hintColor,
+                              color: Colors.white,
                             ),
                           ),
                         ],
@@ -326,6 +326,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   item,
                                   style: const TextStyle(
                                     fontSize: 14,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ))
@@ -360,7 +361,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         border: Border.all(
                           color: Colors.black26,
                         ),
-                        color: Colors.redAccent,
+                        color: Color.fromARGB(255, 78, 86, 75),
                       ),
                       buttonElevation: 2,
                       itemHeight: 40,
@@ -370,7 +371,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       dropdownPadding: null,
                       dropdownDecoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
-                        color: Colors.redAccent,
+                        color: Color.fromARGB(255, 102, 112, 99),
                       ),
                       dropdownElevation: 8,
                       scrollbarRadius: const Radius.circular(40),
