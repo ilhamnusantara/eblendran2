@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.eblendrang2">
    <application
-        android:label="eblendrang2"
+        android:label="Eblendrang"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

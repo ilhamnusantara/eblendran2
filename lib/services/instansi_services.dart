@@ -20,7 +20,7 @@ class InstansiService {
     };
     var response = await http.get(Uri.parse(url), headers: headers);
 
-    print(response.body);
+    print("Instansi Service=> ${response.body}");
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body)['data'];
       // print("frominstansi+> $data");

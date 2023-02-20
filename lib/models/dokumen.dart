@@ -25,6 +25,7 @@ class Dokumen extends Equatable {
       required this.statusBelanja,
       required this.tahun,
       required this.namaInstansi,
+      required this.dataKos,
       required this.createdAt,
       required this.updatedAt,
       this.docStatus});
@@ -50,6 +51,7 @@ class Dokumen extends Equatable {
   final String statusBelanja;
   final String tahun;
   final String namaInstansi;
+  final int dataKos;
   final DateTime createdAt;
   final DateTime updatedAt;
   final List<DokumenStatus>? docStatus;
@@ -76,6 +78,7 @@ class Dokumen extends Equatable {
           String? statusBelanja,
           String? tahun,
           String? namaInstansi,
+          int? dataKos,
           DateTime? createdAt,
           DateTime? updatedAt,
           List<DokumenStatus>? docStatus}) =>
@@ -101,6 +104,7 @@ class Dokumen extends Equatable {
           statusBelanja: statusBelanja ?? this.statusBelanja,
           tahun: tahun ?? this.tahun,
           namaInstansi: namaInstansi ?? this.namaInstansi,
+          dataKos: dataKos ?? this.dataKos,
           createdAt: createdAt ?? this.createdAt,
           updatedAt: updatedAt ?? this.updatedAt,
           docStatus: docStatus ?? this.docStatus);
@@ -127,6 +131,7 @@ class Dokumen extends Equatable {
         namaInstansi: (json['nama_instansi'] == null)
             ? 'Not Detect'
             : json['nama_instansi'],
+        dataKos: (json['dataKos'] == null) ? 0 : json['dataKos'],
         fileBast:
             (json["file_bast"] == null) ? "Not Detect" : json['file_bast'],
         merk: (json["merk"] == null) ? "Not Detect" : json['merk'],
@@ -168,11 +173,12 @@ class Dokumen extends Equatable {
         "status_belanja": statusBelanja,
         "tahun": tahun,
         "nama_instansi": namaInstansi,
+        "dataKos": dataKos,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };
 
   @override
   List<Object?> get props =>
-      [idDokumen, idJenis, idInstansi, noSpk, noBast, namaInstansi];
+      [idDokumen, idJenis, idInstansi, noSpk, noBast, namaInstansi, dataKos];
 }

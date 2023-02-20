@@ -269,15 +269,10 @@ class _DokumenPageState extends State<DokumenPage> {
                                 ],
                               ),
                             ),
-                            Container(
-                              width: 23,
-                              height: 23,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/icon_information.png'),
-                                ),
+                            Text(
+                              '${dokumen[index].dataKos} Item',
+                              style: subtitleTextStyle.copyWith(
+                                fontWeight: light,
                               ),
                             ),
                             SizedBox(
@@ -385,15 +380,10 @@ class _DokumenPageState extends State<DokumenPage> {
                                 ],
                               ),
                             ),
-                            Container(
-                              width: 23,
-                              height: 23,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/icon_information.png'),
-                                ),
+                            Text(
+                              '${dokumen[index].dataKos} Item',
+                              style: subtitleTextStyle.copyWith(
+                                fontWeight: light,
                               ),
                             ),
                             SizedBox(
@@ -501,15 +491,10 @@ class _DokumenPageState extends State<DokumenPage> {
                                 ],
                               ),
                             ),
-                            Container(
-                              width: 23,
-                              height: 23,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/icon_information.png'),
-                                ),
+                            Text(
+                              '${dokumen[index].dataKos} Item',
+                              style: subtitleTextStyle.copyWith(
+                                fontWeight: light,
                               ),
                             ),
                             SizedBox(
@@ -617,15 +602,10 @@ class _DokumenPageState extends State<DokumenPage> {
                                 ],
                               ),
                             ),
-                            Container(
-                              width: 23,
-                              height: 23,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/icon_information.png'),
-                                ),
+                            Text(
+                              '${dokumen[index].dataKos}',
+                              style: subtitleTextStyle.copyWith(
+                                fontWeight: light,
                               ),
                             ),
                             const SizedBox(
@@ -733,15 +713,10 @@ class _DokumenPageState extends State<DokumenPage> {
                                 ],
                               ),
                             ),
-                            Container(
-                              width: 23,
-                              height: 23,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/icon_information.png'),
-                                ),
+                            Text(
+                              '${dokumen[index].dataKos} Item',
+                              style: subtitleTextStyle.copyWith(
+                                fontWeight: light,
                               ),
                             ),
                             const SizedBox(

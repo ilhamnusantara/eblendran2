@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import '../../models/models.dart';
 import '../../services/instansi_services.dart';
@@ -20,6 +21,7 @@ class InstansiBloc extends Bloc<InstansiEvent, InstansiState> {
     emit(InstansiLoadingState());
     try {
       List<Instansi> instansi = await _instansiService.getInstansi();
+      debugPrint(instansi.first.namaInstansi);
       emit(InstansiLoadedState(instansi));
     } catch (e) {
       emit(InstansiErrorState(e.toString()));

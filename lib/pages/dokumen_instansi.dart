@@ -77,15 +77,11 @@ class _DokumenInstansiState extends State<DokumenInstansi> {
                                 ],
                               ),
                             ),
-                            Container(
-                              width: 23,
-                              height: 23,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/icon_information.png'),
-                                ),
+                            Text(
+                              '',
+                              // widget.docList![index].dataKos,
+                              style: subtitleTextStyle.copyWith(
+                                fontWeight: light,
                               ),
                             ),
                             const SizedBox(
